@@ -2,8 +2,7 @@ import './globals.css';
 
 export const metadata = {
   title: 'Saif Elite QS | Quantity Surveyor & Cost Consultant — Dubai, UAE',
-  description: 'Professional Quantity Surveying and Cost Consultancy services across UAE and GCC. Expert cost planning, contract administration, and project management.',
-  keywords: 'quantity surveyor dubai, cost consultant UAE, QS services, cost planning, bill of quantities, contract administration',
+  description: 'Professional Quantity Surveying and Cost Consultancy services across UAE and GCC.',
 };
 
 export default function RootLayout({ children }) {
