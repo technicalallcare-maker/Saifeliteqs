@@ -509,8 +509,10 @@ export default function Page() {
       .svc-grid{grid-template-columns:repeat(2,1fr);}
       .svc-card:nth-child(4n){border-right:1px solid rgba(255,255,255,.08);}
       .svc-card:nth-child(2n){border-right:none!important;}
-      .abt-g{grid-template-columns:1fr;}.abt-img{min-height:350px;}
-      .abt-txt{padding:4rem 2.5rem;}
+      .abt-g{grid-template-columns:1fr;}
+      .abt-img{min-height:280px;}
+      .abt-img::after{width:100%;height:50%;top:auto;bottom:0;background:linear-gradient(to bottom,transparent 0%,var(--off) 100%);}
+      .abt-txt{padding:2rem 1.4rem 4rem;margin-left:0!important;}
       .proc-grid{grid-template-columns:repeat(3,1fr);}
       .prj-grid-stone{grid-template-columns:1fr 1fr;}
       .graph-inner{grid-template-columns:1fr;}
