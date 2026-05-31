@@ -248,7 +248,7 @@ export default function Page() {
     .scrl-txt{font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.25);writing-mode:vertical-rl;}
 
     /* STATS BAND */
-    .statsband{background:var(--navy);padding:3.5rem 1.5rem;}
+    .statsband{background:var(--white);padding:3.5rem 1.5rem;}
     .stats-g{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
     .stat{text-align:center;padding:1rem 1.5rem;position:relative;}
     .stat:not(:last-child)::after{content:'';position:absolute;right:0;top:20%;height:60%;width:1px;background:rgba(255,255,255,.1);}
