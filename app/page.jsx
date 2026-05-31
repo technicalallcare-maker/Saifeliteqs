@@ -416,12 +416,27 @@ export default function Page() {
     .gleg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 
     /* PARTNERS */
-    .partners{background:var(--off);padding:6rem 1.5rem;}
-    .partners-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:3rem;}
-    .partner-item{background:var(--white);padding:1.8rem 1.4rem;display:flex;align-items:center;justify-content:center;text-align:center;transition:background var(--tr);}
-    .partner-item:hover{background:var(--navy);}
-    .partner-item:hover .partner-name{color:#fff;}
-    .partner-name{font-size:.78rem;font-weight:700;color:var(--navy);letter-spacing:.06em;text-transform:uppercase;transition:color var(--tr);}
+    .partners{background:var(--white);padding:5rem 0;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+    .partners-hd{text-align:center;padding:0 1.5rem;margin-bottom:3rem;}
+    .partners-hd .sec-line{margin:0 auto 0;}
+    /* Marquee track */
+    .partners-track-wrap{overflow:hidden;position:relative;}
+    .partners-track-wrap::before,.partners-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none;}
+    .partners-track-wrap::before{left:0;background:linear-gradient(to right,var(--white),transparent);}
+    .partners-track-wrap::after{right:0;background:linear-gradient(to left,var(--white),transparent);}
+    .partners-track{display:flex;gap:0;animation:marquee 28s linear infinite;width:max-content;}
+    .partners-track:hover{animation-play-state:paused;}
+    @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+    .partner-logo{
+      display:flex;align-items:center;justify-content:center;
+      padding:1.2rem 3rem;border-right:1px solid var(--border);
+      min-width:180px;height:90px;
+      filter:grayscale(100%) opacity(.5);
+      transition:filter var(--tr),transform var(--tr);
+      flex-shrink:0;
+    }
+    .partner-logo:hover{filter:grayscale(0%) opacity(1);transform:scale(1.05);}
+    .partner-logo img{max-height:52px;max-width:130px;object-fit:contain;width:auto;}
 
     /* CTA */
     .cta{position:relative;overflow:hidden;padding:8rem 1.5rem;text-align:center;}
@@ -840,17 +855,42 @@ export default function Page() {
 
       {/* PARTNERS */}
       <section className="partners">
-        <div className="wrap">
-          <div className="rv" style={{textAlign:'center'}}>
-            <div className="sec-tag" style={{textAlign:'center',display:'block'}}>Trusted By</div>
-            <h2 className="sec-h" style={{textAlign:'center'}}>Our Partners & Clients</h2>
-            <div className="sec-line" style={{margin:'0 auto 1.2rem'}}/>
-            <p className="sec-p" style={{margin:'0 auto',textAlign:'center'}}>We are proud to have worked with some of the most respected names in UAE and GCC real estate and construction.</p>
-          </div>
-          <div className="partners-grid">
-            {PARTNERS.map(p=>(
-              <div key={p} className="partner-item rv">
-                <span className="partner-name">{p}</span>
+        <div className="partners-hd rv">
+          <div className="sec-tag" style={{textAlign:'center',display:'block'}}>Trusted By</div>
+          <h2 className="sec-h" style={{textAlign:'center',color:'var(--navy)'}}>Our Partners &amp; Clients</h2>
+          <div className="sec-line" style={{margin:'0 auto 1rem'}}/>
+          <p className="sec-p" style={{margin:'0 auto',textAlign:'center',maxWidth:'500px'}}>Proud to have delivered for some of the most respected names in UAE and GCC real estate.</p>
+        </div>
+        <div className="partners-track-wrap">
+          <div className="partners-track">
+            {/* First set */}
+            {[
+              {src:'/images/emaar.png',alt:'Emaar'},
+              {src:'/images/nakheel.png',alt:'Nakheel'},
+              {src:'/images/aldaar.png',alt:'Aldar Properties'},
+              {src:'/images/damac.avif',alt:'DAMAC'},
+              {src:'/images/dubai_properties.png',alt:'Dubai Properties'},
+              {src:'/images/majid.png',alt:'Majid Al Futtaim'},
+              {src:'/images/shoba.png',alt:'Sobha Realty'},
+              {src:'/images/meraasholding.svg',alt:'Meraas'},
+            ].map(l=>(
+              <div key={l.alt} className="partner-logo">
+                <img src={l.src} alt={l.alt}/>
+              </div>
+            ))}
+            {/* Duplicate for seamless loop */}
+            {[
+              {src:'/images/emaar.png',alt:'Emaar2'},
+              {src:'/images/nakheel.png',alt:'Nakheel2'},
+              {src:'/images/aldaar.png',alt:'Aldar2'},
+              {src:'/images/damac.avif',alt:'DAMAC2'},
+              {src:'/images/dubai_properties.png',alt:'Dubai Properties2'},
+              {src:'/images/majid.png',alt:'Majid2'},
+              {src:'/images/shoba.png',alt:'Sobha2'},
+              {src:'/images/meraasholding.svg',alt:'Meraas2'},
+            ].map(l=>(
+              <div key={l.alt} className="partner-logo">
+                <img src={l.src} alt={l.alt}/>
               </div>
             ))}
           </div>
