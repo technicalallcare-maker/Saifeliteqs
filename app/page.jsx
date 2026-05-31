@@ -374,7 +374,7 @@ export default function Page() {
       {/* NAV */}
       <nav className={`nav ${sc ? 'sc' : ''}`}>
         <div className="nlogo" onClick={() => go('home')}>
-          <Image src="/images/QS_logo_bg.png" alt="Saif Elite QS" width={90} height={90} style={{ objectFit: 'contain' }} priority />
+          <Image src="/images/QS_logo_bg.png" alt="Saif Elite QS" width={120} height={120} style={{ objectFit: 'contain' }} priority />
           <div className="nlogo-txt">
             <b>Saif Elite QS</b>
             <span>Quantity Surveyor &amp; Cost Consultant</span>
