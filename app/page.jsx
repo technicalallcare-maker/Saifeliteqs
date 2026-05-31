@@ -302,54 +302,52 @@ export default function Page() {
     .pstep-t{font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:.6rem;font-family:Georgia,serif;}
     .pstep-d{font-size:.78rem;color:var(--txt2);line-height:1.72;}
 
+    /* DESKTOP CALL BUBBLE */
+    .call-bubble{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:500;display:flex;flex-direction:column;}
+    .call-bubble-btn{display:flex;align-items:center;gap:.7rem;background:var(--gold);color:#fff;padding:.75rem 1rem .75rem 1.2rem;text-decoration:none;font-family:inherit;border-radius:4px 0 0 4px;transition:all var(--tr);box-shadow:-4px 0 20px rgba(184,145,42,.35);white-space:nowrap;animation:callPulse 2.5s ease-in-out infinite;}
+    .call-bubble-btn:hover{background:var(--gold-lt);}
+    .call-bubble-txt span:first-child{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;opacity:.8;display:block;}
+    .call-bubble-txt span:last-child{font-size:.8rem;font-weight:700;display:block;}
+    @keyframes callPulse{0%,100%{box-shadow:-4px 0 20px rgba(184,145,42,.3);}50%{box-shadow:-4px 0 36px rgba(184,145,42,.6);}}
+
     /* PROJECTS — Stonehaven style */
     .prj{background:var(--dark);padding:8rem 0;}
     .prj-wrap{max-width:100%;}
     .prj-header{max-width:1100px;margin:0 auto;padding:0 1.5rem;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem;margin-bottom:3rem;}
-    .prj-header .sec-h{color:#fff;}
-    .prj-header .sec-tag{color:var(--gold-lt);}
-    .prj-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:0;}
+    .prj-header .sec-h{color:#fff;}.prj-header .sec-tag{color:var(--gold-lt);}
+    .prj-filters{display:flex;gap:.5rem;flex-wrap:wrap;}
     .pf-btn{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);padding:.38rem 1rem;font-size:.65rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;font-family:inherit;transition:all var(--tr);}
     .pf-btn.a,.pf-btn:hover{background:var(--gold);border-color:var(--gold);color:#fff;}
-
-    /* Large featured card (first) */
-    .prj-grid-stone{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;}
     .prj-card-stone{position:relative;overflow:hidden;cursor:pointer;}
-    .prj-card-stone:first-child{grid-column:1/2;grid-row:1/3;}
-    .prj-card-stone:nth-child(2){grid-column:2/3;grid-row:1/2;}
-    .prj-card-stone:nth-child(3){grid-column:2/3;grid-row:2/3;}
-
-    /* if only 4+ cards */
-    .prj-grid-stone-full{display:grid;grid-template-columns:repeat(3,1fr);}
-
-    .prj-img-stone{
-      width:100%;
-      position:relative;overflow:hidden;
-    }
-    .prj-card-stone:first-child .prj-img-stone{height:640px;}
-    .prj-card-stone:not(:first-child) .prj-img-stone{height:320px;}
+    .prj-img-stone{width:100%;position:relative;overflow:hidden;}
     .prj-img-stone img{object-fit:cover;object-position:center;transition:transform .7s ease;}
-    .prj-card-stone:hover .prj-img-stone img{transform:scale(1.06);}
-
-    /* overlay */
-    .prj-stone-overlay{
-      position:absolute;inset:0;
-      background:linear-gradient(to top,rgba(10,13,20,.92) 0%,rgba(10,13,20,.3) 50%,transparent 100%);
-      display:flex;flex-direction:column;justify-content:flex-end;
-      padding:2rem;
-      transition:all var(--tr);
-    }
-    .prj-card-stone:hover .prj-stone-overlay{background:linear-gradient(to top,rgba(10,13,20,.96) 0%,rgba(10,13,20,.5) 60%,rgba(10,13,20,.1) 100%);}
-    .prj-stone-tag{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:.5rem;border-left:2px solid var(--gold);padding-left:.6rem;}
-    .prj-stone-name{font-size:clamp(1rem,2.5vw,1.5rem);font-weight:700;color:#fff;font-family:Georgia,serif;margin-bottom:.3rem;line-height:1.2;}
-    .prj-stone-loc{font-size:.72rem;color:rgba(255,255,255,.55);margin-bottom:.5rem;}
-    .prj-stone-val{font-size:.78rem;color:var(--gold-lt);font-weight:700;margin-bottom:.8rem;}
-    .prj-stone-desc{font-size:.78rem;color:rgba(255,255,255,.65);line-height:1.65;max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .4s ease;opacity:0;}
-    .prj-card-stone:hover .prj-stone-desc{max-height:100px;opacity:1;}
-    .prj-stone-arrow{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-lt);margin-top:.8rem;opacity:0;transform:translateY(8px);transition:all var(--tr);}
+    .prj-card-stone:hover .prj-img-stone img{transform:scale(1.05);}
+    .prj-stone-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,13,20,.92) 0%,rgba(10,13,20,.2) 55%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.8rem;transition:background var(--tr);}
+    .prj-card-stone:hover .prj-stone-overlay{background:linear-gradient(to top,rgba(10,13,20,.96) 0%,rgba(10,13,20,.55) 65%,rgba(10,13,20,.1) 100%);}
+    .prj-stone-tag{font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:.45rem;border-left:2px solid var(--gold);padding-left:.55rem;}
+    .prj-stone-name{font-size:clamp(.95rem,2.2vw,1.4rem);font-weight:700;color:#fff;font-family:Georgia,serif;margin-bottom:.25rem;line-height:1.2;}
+    .prj-stone-loc{font-size:.7rem;color:rgba(255,255,255,.5);margin-bottom:.4rem;}
+    .prj-stone-val{font-size:.76rem;color:var(--gold-lt);font-weight:700;margin-bottom:.6rem;}
+    .prj-stone-desc{font-size:.76rem;color:rgba(255,255,255,.6);line-height:1.65;max-height:0;overflow:hidden;transition:max-height .4s,opacity .4s;opacity:0;}
+    .prj-card-stone:hover .prj-stone-desc{max-height:80px;opacity:1;}
+    .prj-stone-arrow{display:inline-flex;align-items:center;gap:.4rem;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-lt);margin-top:.7rem;opacity:0;transform:translateY(6px);transition:all var(--tr);}
     .prj-card-stone:hover .prj-stone-arrow{opacity:1;transform:translateY(0);}
+    /* Desktop layout */
+    .prj-desktop{display:block;}
+    .prj-feat-row{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:3px;}
+    .prj-feat-row .prj-left .prj-img-stone{height:623px;}
+    .prj-right-stack{display:flex;flex-direction:column;gap:3px;}
+    .prj-right-stack .prj-img-stone{height:308px;}
+    .prj-bot-row{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;}
+    .prj-bot-row .prj-img-stone{height:300px;}
+    /* Mobile layout */
+    .prj-mobile{display:none;padding:0 1.5rem;}
+    .prj-mob-grid{display:grid;grid-template-columns:1fr;gap:1rem;}
+    .prj-mob-grid .prj-img-stone{height:260px;}
+    .prj-mob-grid .prj-stone-desc{max-height:60px!important;opacity:1!important;}
+    .prj-mob-grid .prj-stone-arrow{opacity:1!important;transform:none!important;}
 
-    /* ANIMATED GRAPH SECTION */
+        /* ANIMATED GRAPH SECTION */
     .graph-sec{background:var(--navy);padding:8rem 1.5rem;}
     .graph-sec .sec-h{color:#fff;}.graph-sec .sec-p{color:rgba(255,255,255,.6);}
     .graph-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;margin-top:4rem;}
@@ -464,10 +462,9 @@ export default function Page() {
       .proc-grid{grid-template-columns:1fr;}
       .pstep{border-right:none;border-bottom:1px solid var(--border);}
       .pstep:last-child{border-bottom:none;}
-      .prj-grid-stone{grid-template-columns:1fr;grid-template-rows:auto;}
-      .prj-card-stone:first-child{grid-column:1;grid-row:auto;}
-      .prj-card-stone:nth-child(2),.prj-card-stone:nth-child(3){grid-column:1;grid-row:auto;}
-      .prj-card-stone:first-child .prj-img-stone,.prj-card-stone:not(:first-child) .prj-img-stone{height:280px;}
+      .prj-desktop{display:none!important;}
+      .prj-mobile{display:block!important;}
+      .call-bubble{display:none!important;}
       .partners-grid{grid-template-columns:repeat(2,1fr);}
       .frow{grid-template-columns:1fr;}
       .ftr-main-in{grid-template-columns:1fr;gap:2.5rem;}
@@ -503,6 +500,16 @@ export default function Page() {
       <a href={`tel:${PHONE}`} className="mob-call" aria-label="Call"><Svg d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 11.9a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.93 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z" s={22}/></a>
       <a href={WA_LINK} target="_blank" rel="noreferrer" className="mob-wa" aria-label="WhatsApp">
         <svg width={24} height={24} viewBox="0 0 24 24" fill="white"><path d={WA_PATH}/></svg>
+      </a>
+
+
+      {/* DESKTOP CALL BUBBLE — right side */}
+      <a href={`tel:${PHONE}`} className="call-bubble-btn call-bubble" aria-label="Call us" style={{textDecoration:'none'}}>
+        <Svg d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 11.9a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.93 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z" s={20}/>
+        <div className="call-bubble-txt">
+          <span>Call Us Now</span>
+          <span>{PHONE}</span>
+        </div>
       </a>
 
       {/* NAV */}
@@ -604,7 +611,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* PROJECTS — Stonehaven style */}
+      {/* PROJECTS */}
       <section id="projects" className="prj">
         <div className="prj-wrap">
           <div className="prj-header">
@@ -618,13 +625,88 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Stonehaven layout — first card big left, 2 stacked right */}
-          {filteredProjs.length >= 3 && prjFilter === 'All' ? (
-            <div className="prj-grid-stone">
-              {filteredProjs.slice(0,3).map((p,i)=>(
+          {/* DESKTOP layout */}
+          <div className="prj-desktop">
+            {prjFilter==='All' ? (
+              <>
+                <div className="prj-feat-row">
+                  <div className="prj-left prj-card-stone">
+                    <div className="prj-img-stone">
+                      <Image src={filteredProjs[0].img} alt={filteredProjs[0].n} fill sizes="50vw" style={{objectFit:'cover'}}/>
+                    </div>
+                    <div className="prj-stone-overlay">
+                      <div className="prj-stone-tag">{filteredProjs[0].tag}</div>
+                      <div className="prj-stone-name">{filteredProjs[0].n}</div>
+                      <div className="prj-stone-loc">{filteredProjs[0].loc}</div>
+                      <div className="prj-stone-val">{filteredProjs[0].v}</div>
+                      <div className="prj-stone-desc">{filteredProjs[0].d}</div>
+                      <div className="prj-stone-arrow">View Project <Svg d="M5 12h14M12 5l7 7-7 7" s={13}/></div>
+                    </div>
+                  </div>
+                  <div className="prj-right-stack">
+                    {filteredProjs.slice(1,3).map(p=>(
+                      <div key={p.n} className="prj-card-stone">
+                        <div className="prj-img-stone">
+                          <Image src={p.img} alt={p.n} fill sizes="50vw" style={{objectFit:'cover'}}/>
+                        </div>
+                        <div className="prj-stone-overlay">
+                          <div className="prj-stone-tag">{p.tag}</div>
+                          <div className="prj-stone-name">{p.n}</div>
+                          <div className="prj-stone-loc">{p.loc}</div>
+                          <div className="prj-stone-val">{p.v}</div>
+                          <div className="prj-stone-desc">{p.d}</div>
+                          <div className="prj-stone-arrow">View Project <Svg d="M5 12h14M12 5l7 7-7 7" s={13}/></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="prj-bot-row">
+                  {filteredProjs.slice(3).map(p=>(
+                    <div key={p.n} className="prj-card-stone">
+                      <div className="prj-img-stone">
+                        <Image src={p.img} alt={p.n} fill sizes="33vw" style={{objectFit:'cover'}}/>
+                      </div>
+                      <div className="prj-stone-overlay">
+                        <div className="prj-stone-tag">{p.tag}</div>
+                        <div className="prj-stone-name">{p.n}</div>
+                        <div className="prj-stone-loc">{p.loc}</div>
+                        <div className="prj-stone-val">{p.v}</div>
+                        <div className="prj-stone-desc">{p.d}</div>
+                        <div className="prj-stone-arrow">View Project <Svg d="M5 12h14M12 5l7 7-7 7" s={13}/></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="prj-bot-row">
+                {filteredProjs.map(p=>(
+                  <div key={p.n} className="prj-card-stone">
+                    <div className="prj-img-stone" style={{height:'380px'}}>
+                      <Image src={p.img} alt={p.n} fill sizes="33vw" style={{objectFit:'cover'}}/>
+                    </div>
+                    <div className="prj-stone-overlay">
+                      <div className="prj-stone-tag">{p.tag}</div>
+                      <div className="prj-stone-name">{p.n}</div>
+                      <div className="prj-stone-loc">{p.loc}</div>
+                      <div className="prj-stone-val">{p.v}</div>
+                      <div className="prj-stone-desc">{p.d}</div>
+                      <div className="prj-stone-arrow">View Project <Svg d="M5 12h14M12 5l7 7-7 7" s={13}/></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* MOBILE layout */}
+          <div className="prj-mobile">
+            <div className="prj-mob-grid">
+              {filteredProjs.map(p=>(
                 <div key={p.n} className="prj-card-stone">
                   <div className="prj-img-stone">
-                    <Image src={p.img} alt={p.n} fill sizes="(max-width:768px) 100vw, 50vw" style={{objectFit:'cover'}}/>
+                    <Image src={p.img} alt={p.n} fill sizes="100vw" style={{objectFit:'cover'}}/>
                   </div>
                   <div className="prj-stone-overlay">
                     <div className="prj-stone-tag">{p.tag}</div>
@@ -632,30 +714,11 @@ export default function Page() {
                     <div className="prj-stone-loc">{p.loc}</div>
                     <div className="prj-stone-val">{p.v}</div>
                     <div className="prj-stone-desc">{p.d}</div>
-                    <div className="prj-stone-arrow">View Project &nbsp;<Svg d="M5 12h14M12 5l7 7-7 7" s={13}/></div>
+                    <div className="prj-stone-arrow">View Project <Svg d="M5 12h14M12 5l7 7-7 7" s={13}/></div>
                   </div>
                 </div>
               ))}
             </div>
-          ) : null}
-
-          {/* Bottom row — remaining projects */}
-          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',marginTop:'1px'}}>
-            {(prjFilter==='All' ? filteredProjs.slice(3) : filteredProjs).map((p,i)=>(
-              <div key={p.n} className="prj-card-stone">
-                <div className="prj-img-stone" style={{height:'300px'}}>
-                  <Image src={p.img} alt={p.n} fill sizes="33vw" style={{objectFit:'cover'}}/>
-                </div>
-                <div className="prj-stone-overlay">
-                  <div className="prj-stone-tag">{p.tag}</div>
-                  <div className="prj-stone-name">{p.n}</div>
-                  <div className="prj-stone-loc">{p.loc}</div>
-                  <div className="prj-stone-val">{p.v}</div>
-                  <div className="prj-stone-desc">{p.d}</div>
-                  <div className="prj-stone-arrow">View Project &nbsp;<Svg d="M5 12h14M12 5l7 7-7 7" s={13}/></div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
