@@ -278,12 +278,22 @@ export default function Page() {
     .svc-d{font-size:.8rem;color:rgba(255,255,255,.55);line-height:1.75;}
 
     /* ABOUT */
-    .abt{background:var(--off);padding:0;}
-    .abt-g{display:grid;grid-template-columns:1fr 1fr;min-height:580px;}
+    .abt{background:var(--off);padding:0;overflow:hidden;}
+    .abt-g{display:grid;grid-template-columns:1fr 1fr;min-height:580px;position:relative;}
     .abt-img{position:relative;overflow:hidden;min-height:500px;}
     .abt-img img{object-fit:cover;object-position:center;}
-    .abt-img::after{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:var(--gold);}
-    .abt-txt{padding:6rem 4.5rem;display:flex;flex-direction:column;justify-content:center;}
+    /* Fade right edge into background */
+    .abt-img::after{
+      content:'';position:absolute;top:0;right:0;
+      width:55%;height:100%;
+      background:linear-gradient(to right, transparent 0%, var(--off) 100%);
+    }
+    .abt-txt{
+      padding:6rem 3rem 6rem 1rem;
+      display:flex;flex-direction:column;justify-content:center;
+      position:relative;z-index:2;
+      margin-left:-6rem;
+    }
     .why-list{margin-top:1.8rem;display:flex;flex-direction:column;gap:.9rem;}
     .why-row{display:flex;align-items:flex-start;gap:.8rem;}
     .why-chk{color:var(--gold);flex-shrink:0;margin-top:2px;}
