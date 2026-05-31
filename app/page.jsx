@@ -248,12 +248,12 @@ export default function Page() {
     .scrl-txt{font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.25);writing-mode:vertical-rl;}
 
     /* STATS BAND */
-    .statsband{background:var(--white);padding:3.5rem 1.5rem;}
+    .statsband{background:var(--white);padding:3.5rem 1.5rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
     .stats-g{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
     .stat{text-align:center;padding:1rem 1.5rem;position:relative;}
-    .stat:not(:last-child)::after{content:'';position:absolute;right:0;top:20%;height:60%;width:1px;background:rgba(255,255,255,.1);}
-    .stat-v{font-size:2.6rem;font-weight:700;color:var(--gold-lt);font-family:Georgia,serif;line-height:1;margin-bottom:.3rem;}
-    .stat-l{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);}
+    .stat:not(:last-child)::after{content:'';position:absolute;right:0;top:20%;height:60%;width:1px;background:var(--border);}
+    .stat-v{font-size:2.6rem;font-weight:700;color:var(--gold);font-family:Georgia,serif;line-height:1;margin-bottom:.5rem;}
+    .stat-l{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--txt2);}
 
     /* SECTION */
     section{padding:8rem 1.5rem;}
@@ -571,7 +571,9 @@ export default function Page() {
           <span>{PHONE}</span>
         </div>
         <div className="call-bubble-ring">
-          <Svg d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 11.9a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.93 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z" s={22} w={2}/>
+          <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 11.9a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.93 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/>
+          </svg>
         </div>
       </a>
 
