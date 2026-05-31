@@ -548,10 +548,7 @@ export default function Page() {
       </section>
 
       {/* CTA — real bg image */}
-      <div className="cta">
-        <div className="cta-bg" style={{ position: 'absolute', inset: 0 }}>
-          <Image src="/images/last_hero_section1.jpeg" alt="CTA background" fill sizes="100vw" style={{ objectFit: 'cover', objectPosition: 'center' }} />
-        </div>
+      <div className="cta" style={{ backgroundImage: "url('/images/last_hero_section1.jpeg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="cta-overlay" />
         <div className="cta-in rv">
           <div className="cta-tag">Start Today</div>
