@@ -16,20 +16,21 @@ const PROC_ICONS = [
 ];
 
 const SLIDES = [
-  { tag:'Quantity Surveying & Cost Consultancy', h1:'Global Vision.', h2:'Local Expertise.', sub:'Precision cost management delivered across the UAE and GCC', img:'/images/hero_section1.jpg' },
+  { tag:'Quantity Surveying & Cost Consultancy', h1:'Global Vision.', h2:'Local Expertise.', sub:'Precision cost management delivered across the UAE, GCC and internationally', img:'/images/hero_section1.jpg' },
   { tag:'Proactive Approach · Diligent Delivery', h1:'Protecting Your', h2:'Investment.', sub:'From initial concept through to final account — complete cost control', img:'/images/hero_section2.jpg' },
   { tag:'Superior Results · Every Project', h1:'Expert QS Services', h2:'You Can Trust.', sub:'Over a decade of excellence in the UAE built environment', img:'/images/hero_section3.jpeg' },
 ];
 
 const SVCS = [
   { n:'01', t:'Cost Planning & Estimation', d:'Detailed estimates and cost plans at every design stage — from initial feasibility through to tender, providing reliable budget benchmarks throughout the project lifecycle.' },
-  { n:'02', t:'Bill of Quantities', d:'Precisely measured Bills of Quantities prepared to standard methods of measurement, forming a transparent basis for tendering, procurement and ongoing cost control.' },
-  { n:'03', t:'Contract Administration', d:'Expert management of construction contracts — interim valuations, variation assessment, claims handling and final account negotiation to protect your interests.' },
-  { n:'04', t:'Project Cost Management', d:'Proactive monitoring, forecasting and reporting throughout construction, keeping your budget on track and identifying commercial risks before they become costly.' },
-  { n:'05', t:'Dispute Resolution', d:'Professional quantum preparation and independent review for disputes, adjudications and arbitrations — protecting your commercial position at every stage.' },
-  { n:'06', t:'Feasibility Studies', d:'Robust financial viability assessments and investment appraisals providing the clarity needed to make sound project decisions before committing capital.' },
-  { n:'07', t:'Procurement Strategy', d:'Guidance on the most appropriate procurement routes, contract forms and tendering strategies to achieve best value and minimise commercial risk.' },
-  { n:'08', t:'Value Engineering', d:'Structured cost reduction exercises identifying opportunities to reduce expenditure without compromising design intent, quality or construction programme.' },
+  { n:'02', t:'RICS-AIQS Independent QS Services', d:'As RICS and AIQS certified practitioners, we deliver fully independent quantity surveying services across the UAE, GCC, UK, Ireland, New Zealand and Australia — ensuring impartial, professional cost advice on every commission.' },
+  { n:'03', t:'Bill of Quantities', d:'Precisely measured Bills of Quantities prepared to standard methods of measurement, forming a transparent basis for tendering, procurement and ongoing cost control.' },
+  { n:'04', t:'Contract Administration', d:'Expert management of construction contracts — interim valuations, variation assessment, claims handling and final account negotiation to protect your interests.' },
+  { n:'05', t:'Project Cost Management', d:'Proactive monitoring, forecasting and reporting throughout construction, keeping your budget on track and identifying commercial risks before they become costly.' },
+  { n:'06', t:'Dispute Resolution', d:'Professional quantum preparation and independent review for disputes, adjudications and arbitrations — protecting your commercial position at every stage.' },
+  { n:'07', t:'Feasibility Studies', d:'Robust financial viability assessments and investment appraisals providing the clarity needed to make sound project decisions before committing capital.' },
+  { n:'08', t:'Procurement Strategy', d:'Guidance on the most appropriate procurement routes, contract forms and tendering strategies to achieve best value and minimise commercial risk.' },
+  { n:'09', t:'Value Engineering', d:'Structured cost reduction exercises identifying opportunities to reduce expenditure without compromising design intent, quality or construction programme.' },
 ];
 
 const STATS = [
@@ -58,8 +59,9 @@ const PROJS = [
 
 const WHY = [
   'RICS-aligned professional standards on every commission',
+  'RICS-AIQS certified — internationally recognised quality across all our offices (UAE, UK, Ireland, NZ & Australia)',
   'Dedicated senior QS assigned throughout your project',
-  'Deep knowledge of UAE and GCC construction markets',
+  'Deep knowledge of UAE, GCC, UK, Ireland, NZ & Australia construction markets',
   'Transparent reporting — no surprises at final account',
   'Proactive risk identification before problems escalate',
   'Proven track record across all major construction sectors',
@@ -81,7 +83,11 @@ const PARTNERS = [
 ];
 
 const CNTS = [
-  { d:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', l:'Office', v:'Dubai, United Arab Emirates' },
+  { d:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', l:'Head Office', v:'Dubai, United Arab Emirates' },
+  { d:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', l:'UK Office', v:'United Kingdom' },
+  { d:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', l:'Ireland Office', v:'Ireland' },
+  { d:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', l:'NZ Office', v:'New Zealand' },
+  { d:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', l:'Australia Office', v:'Australia' },
   { d:'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 11.9a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.93 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z', l:'Phone', v:'+971 56 465 5043' },
   { d:'M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zM22 6l-10 7L2 6', l:'Email', v:'info@saifeliteqs.com' },
   { d:'M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zM2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z', l:'Website', v:'www.saifeliteqs.com' },
@@ -566,7 +572,7 @@ export default function Page() {
         <a href={`mailto:info@saifeliteqs.com`} title="Email"><Svg d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zM22 6l-10 7L2 6" s={18}/></a>
         <a href="https://linkedin.com" target="_blank" rel="noreferrer" title="LinkedIn"><Svg d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" s={18}/></a>
         <a href="https://instagram.com" target="_blank" rel="noreferrer" title="Instagram"><Svg d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" s={18}/></a>
-        <a href="https://facebook.com" target="_blank" rel="noreferrer" title="Facebook"><Svg d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" s={18}/></a>
+        <a href="https://www.facebook.com/people/Saif-Elite-QS/61590199756177/" target="_blank" rel="noreferrer" title="Facebook"><Svg d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" s={18}/></a>
       </div>
 
       {/* MOBILE FIXED BUTTONS */}
@@ -667,7 +673,7 @@ export default function Page() {
               <div className="sec-tag">Who We Are</div>
               <h2 className="sec-h">About Saif Elite QS</h2>
               <div className="sec-line"/>
-              <p className="sec-p" style={{marginBottom:'1rem'}}>Saif Elite QS is a specialist quantity surveying and cost consultancy practice based in Dubai, serving clients across the UAE and GCC. We bring rigorous commercial discipline to every project.</p>
+              <p className="sec-p" style={{marginBottom:'1rem'}}>Saif Elite QS is a specialist quantity surveying and cost consultancy practice headquartered in Dubai, UAE, with offices in the UK, Ireland, New Zealand and Australia — delivering independent QS services across the UAE, GCC and internationally. We bring rigorous commercial discipline to every project.</p>
               <p className="sec-p" style={{marginBottom:'1rem'}}>Our qualified team delivers measurable value at every stage — working alongside developers, contractors, architects and project managers to ensure cost is always controlled and every decision is fully informed.</p>
               <div className="why-list">
                 {WHY.map((w,i)=>(<div key={i} className="why-row"><span className="why-chk"><Svg d="M20 6 9 17l-5-5" s={14} w={2.5}/></span><span className="why-t">{w}</span></div>))}
@@ -962,11 +968,11 @@ export default function Page() {
               <div className="ftr-brand-logo"><Image src="/images/QS_logo_bg.png" alt="Saif Elite QS" width={80} height={80} style={{objectFit:'contain'}}/></div>
               <div className="ftr-brand-name">Saif Elite QS</div>
               <div className="ftr-brand-sub">Quantity Surveyor &amp; Cost Consultant</div>
-              <p className="ftr-brand-p">Professional QS and cost consultancy across the UAE and GCC. Trusted by developers, contractors and investors on every project.</p>
+              <p className="ftr-brand-p">Independent QS and cost consultancy headquartered in Dubai, with offices in the UK, Ireland, New Zealand and Australia. Trusted by developers, contractors and investors across the UAE, GCC and internationally.</p>
               <div className="ftr-brand-contact">
                 <a href={`tel:${PHONE}`}><Svg d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 11.9a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.93 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z" s={15}/>{PHONE}</a>
                 <a href="mailto:info@saifeliteqs.com"><Svg d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zM22 6l-10 7L2 6" s={15}/>info@saifeliteqs.com</a>
-                <a href="#"><Svg d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" s={15}/>Dubai, United Arab Emirates</a>
+                <a href="#"><Svg d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" s={15}/>Dubai, UAE · UK · Ireland · NZ · Australia</a>
               </div>
               <div className="fsoc">
                 {["M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z","M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z","M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z"].map((d,i)=>(<a key={i} href="#" className="fsc"><Svg d={d} s={15}/></a>))}
@@ -1002,7 +1008,7 @@ export default function Page() {
         <div className="ftr-bot">
           <div className="ftr-bot-in">
             <p>© 2025 <span className="hl">Saif Elite QS</span>. All rights reserved.</p>
-            <p>Quantity Surveyor &amp; Cost Consultant — Dubai, UAE</p>
+            <p>Quantity Surveyor &amp; Cost Consultant — Dubai · UK · Ireland · NZ · Australia</p>
           </div>
         </div>
       </footer>
