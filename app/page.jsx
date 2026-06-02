@@ -628,7 +628,7 @@ export default function Page() {
           <h1 className={`hero-h ${anim?'':'out'}`}><span>{SLIDES[sl].h1}</span><span>{SLIDES[sl].h2}</span></h1>
           <p className={`hero-sub ${anim?'':'out'}`}>{SLIDES[sl].sub}</p>
           <div className="hero-btns">
-            <button className="btn-gold" onClick={()=>go('contact')}>Free Consultation &nbsp;<Svg d="M5 12h14M12 5l7 7-7 7" s={14}/></button>
+            <button className="btn-gold" onClick={()=>go('contact')}>Professional Consultation &nbsp;<Svg d="M5 12h14M12 5l7 7-7 7" s={14}/></button>
             <button className="btn-white" onClick={()=>go('services')}>Our Services</button>
           </div>
         </div>
