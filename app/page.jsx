@@ -23,7 +23,7 @@ const SLIDES = [
 
 const SVCS = [
   { n:'01', t:'Cost Planning & Estimation', d:'Detailed estimates and cost plans at every design stage — from initial feasibility through to tender, providing reliable budget benchmarks throughout the project lifecycle.' },
-  { n:'02', t:'RICS-AIQS Independent QS Services', d:'As RICS and AIQS certified practitioners, we deliver fully independent quantity surveying services across the UAE, GCC, UK, Ireland, New Zealand and Australia — ensuring impartial, professional cost advice on every commission.' },
+  { n:'02', t:'RICS-AIQS — Developing Under Their Guidance & Standards', d:'Saif Elite QS is actively developing under the guidance and standards of RICS (Royal Institution of Chartered Surveyors) and AIQS (Australian Institute of Quantity Surveyors) — ensuring our practice meets the highest internationally recognised benchmarks of quality, ethics and professional competence.' },
   { n:'03', t:'Bill of Quantities', d:'Precisely measured Bills of Quantities prepared to standard methods of measurement, forming a transparent basis for tendering, procurement and ongoing cost control.' },
   { n:'04', t:'Contract Administration', d:'Expert management of construction contracts — interim valuations, variation assessment, claims handling and final account negotiation to protect your interests.' },
   { n:'05', t:'Project Cost Management', d:'Proactive monitoring, forecasting and reporting throughout construction, keeping your budget on track and identifying commercial risks before they become costly.' },
@@ -59,7 +59,7 @@ const PROJS = [
 
 const WHY = [
   'RICS-aligned professional standards on every commission',
-  'RICS-AIQS certified — internationally recognised quality across all our offices (UAE, UK, Ireland, NZ & Australia)',
+  'Developing under RICS & AIQS guidance and standards — committed to the highest international benchmarks of quality and professionalism',
   'Dedicated senior QS assigned throughout your project',
   'Deep knowledge of UAE, GCC, UK, Ireland, NZ & Australia construction markets',
   'Transparent reporting — no surprises at final account',
@@ -84,10 +84,10 @@ const PARTNERS = [
 
 const CNTS = [
   { d:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', l:'Head Office', v:'Dubai, United Arab Emirates' },
-  { d:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', l:'UK Office', v:'United Kingdom' },
-  { d:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', l:'Ireland Office', v:'Ireland' },
-  { d:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', l:'NZ Office', v:'New Zealand' },
-  { d:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', l:'Australia Office', v:'Australia' },
+  { d:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', l:'UK Office', v:'United Kingdom (Remote QS Services)' },
+  { d:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', l:'Ireland Office', v:'Ireland (Remote QS Services)' },
+  { d:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', l:'NZ Office', v:'New Zealand (Remote QS Services)' },
+  { d:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', l:'Australia Office', v:'Australia (Remote QS Services)' },
   { d:'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 11.9a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.93 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z', l:'Phone', v:'+971 56 465 5043' },
   { d:'M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zM22 6l-10 7L2 6', l:'Email', v:'info@saifeliteqs.com' },
   { d:'M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zM2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z', l:'Website', v:'www.saifeliteqs.com' },
@@ -570,8 +570,8 @@ export default function Page() {
           <svg width={20} height={20} viewBox="0 0 24 24" fill="white"><path d={WA_PATH}/></svg>
         </a>
         <a href={`mailto:info@saifeliteqs.com`} title="Email"><Svg d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zM22 6l-10 7L2 6" s={18}/></a>
-        <a href="https://linkedin.com" target="_blank" rel="noreferrer" title="LinkedIn"><Svg d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" s={18}/></a>
-        <a href="https://instagram.com" target="_blank" rel="noreferrer" title="Instagram"><Svg d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" s={18}/></a>
+        <a href="https://www.linkedin.com/company/saif-elite-qs" target="_blank" rel="noreferrer" title="LinkedIn"><Svg d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" s={18}/></a>
+        <a href="https://www.instagram.com/saifeliteqs/" target="_blank" rel="noreferrer" title="Instagram"><Svg d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" s={18}/></a>
         <a href="https://www.facebook.com/people/Saif-Elite-QS/61590199756177/" target="_blank" rel="noreferrer" title="Facebook"><Svg d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" s={18}/></a>
       </div>
 
@@ -673,7 +673,7 @@ export default function Page() {
               <div className="sec-tag">Who We Are</div>
               <h2 className="sec-h">About Saif Elite QS</h2>
               <div className="sec-line"/>
-              <p className="sec-p" style={{marginBottom:'1rem'}}>Saif Elite QS is a specialist quantity surveying and cost consultancy practice headquartered in Dubai, UAE, with offices in the UK, Ireland, New Zealand and Australia — delivering independent QS services across the UAE, GCC and internationally. We bring rigorous commercial discipline to every project.</p>
+              <p className="sec-p" style={{marginBottom:'1rem'}}>Saif Elite QS is a specialist quantity surveying and cost consultancy practice headquartered in Dubai, UAE, providing remote QS services across the UK, Ireland, New Zealand and Australia — delivering independent QS services across the UAE, GCC and internationally. We bring rigorous commercial discipline to every project.</p>
               <p className="sec-p" style={{marginBottom:'1rem'}}>Our qualified team delivers measurable value at every stage — working alongside developers, contractors, architects and project managers to ensure cost is always controlled and every decision is fully informed.</p>
               <div className="why-list">
                 {WHY.map((w,i)=>(<div key={i} className="why-row"><span className="why-chk"><Svg d="M20 6 9 17l-5-5" s={14} w={2.5}/></span><span className="why-t">{w}</span></div>))}
@@ -968,16 +968,16 @@ export default function Page() {
               <div className="ftr-brand-logo"><Image src="/images/QS_logo_bg.png" alt="Saif Elite QS" width={80} height={80} style={{objectFit:'contain'}}/></div>
               <div className="ftr-brand-name">Saif Elite QS</div>
               <div className="ftr-brand-sub">Quantity Surveyor &amp; Cost Consultant</div>
-              <p className="ftr-brand-p">Independent QS and cost consultancy headquartered in Dubai, with offices in the UK, Ireland, New Zealand and Australia. Trusted by developers, contractors and investors across the UAE, GCC and internationally.</p>
+              <p className="ftr-brand-p">Independent QS and cost consultancy headquartered in Dubai, UAE, providing remote QS services across the UK, Ireland, New Zealand and Australia. Trusted by developers, contractors and investors across the UAE, GCC and internationally.</p>
               <div className="ftr-brand-contact">
                 <a href={`tel:${PHONE}`}><Svg d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 11.9a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.93 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z" s={15}/>{PHONE}</a>
                 <a href="mailto:info@saifeliteqs.com"><Svg d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zM22 6l-10 7L2 6" s={15}/>info@saifeliteqs.com</a>
-                <a href="#"><Svg d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" s={15}/>Dubai, UAE · UK · Ireland · NZ · Australia</a>
+                <a href="#"><Svg d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" s={15}/>Dubai, UAE (HQ) · UK · Ireland · NZ · Australia (Remote)</a>
               </div>
               <div className="fsoc">
-                <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="fsc" aria-label="LinkedIn"><Svg d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" s={15}/></a>
+                <a href="https://www.linkedin.com/company/saif-elite-qs" target="_blank" rel="noreferrer" className="fsc" aria-label="LinkedIn"><Svg d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" s={15}/></a>
                 <a href="https://www.facebook.com/people/Saif-Elite-QS/61590199756177/" target="_blank" rel="noreferrer" className="fsc" aria-label="Facebook"><Svg d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" s={15}/></a>
-                <a href="https://instagram.com" target="_blank" rel="noreferrer" className="fsc" aria-label="Instagram"><Svg d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" s={15}/></a>
+                <a href="https://www.instagram.com/saifeliteqs/" target="_blank" rel="noreferrer" className="fsc" aria-label="Instagram"><Svg d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" s={15}/></a>
               </div>
             </div>
             <div className="fcol">
@@ -990,7 +990,7 @@ export default function Page() {
               <h4 style={{marginTop:'2rem'}}>Connect</h4>
               <ul>
                 <li><a href={WA_LINK} target="_blank" rel="noreferrer">WhatsApp</a></li>
-                <li><a href="#">LinkedIn</a></li>
+                <li><a href="https://www.linkedin.com/company/saif-elite-qs" target="_blank" rel="noreferrer">LinkedIn</a></li>
                 <li><a href="mailto:info@saifeliteqs.com">Email Us</a></li>
                 <li><a href={`tel:${PHONE}`}>Call Us</a></li>
               </ul>
@@ -1010,7 +1010,7 @@ export default function Page() {
         <div className="ftr-bot">
           <div className="ftr-bot-in">
             <p>© 2025 <span className="hl">Saif Elite QS</span>. All rights reserved.</p>
-            <p>Quantity Surveyor &amp; Cost Consultant — Dubai · UK · Ireland · NZ · Australia</p>
+            <p>Quantity Surveyor &amp; Cost Consultant — Dubai (HQ) · UK · Ireland · NZ · Australia (Remote)</p>
           </div>
         </div>
       </footer>
