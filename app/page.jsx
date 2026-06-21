@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Svg = ({ d, s = 20, w = 1.5 }) => (
   <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -93,6 +94,7 @@ const CNTS = [
   { d:'M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zM2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z', l:'Website', v:'www.saifeliteqs.com' },
 ];
 
+// ✅ UPDATED: Added 'Procurement' to navigation
 const NAV = ['Home','Services','About','Procurement','Projects','Contact'];
 const PHONE = '+97156465 5043';
 const WA_LINK = 'https://wa.me/971564655043';
@@ -288,18 +290,8 @@ export default function Page() {
     .abt-g{display:grid;grid-template-columns:1fr 1fr;min-height:580px;position:relative;}
     .abt-img{position:relative;overflow:hidden;min-height:500px;}
     .abt-img img{object-fit:cover;object-position:center;}
-    /* Fade right edge into background */
-    .abt-img::after{
-      content:'';position:absolute;top:0;right:0;
-      width:55%;height:100%;
-      background:linear-gradient(to right, transparent 0%, var(--off) 100%);
-    }
-    .abt-txt{
-      padding:6rem 3rem 6rem 1rem;
-      display:flex;flex-direction:column;justify-content:center;
-      position:relative;z-index:2;
-      margin-left:-6rem;
-    }
+    .abt-img::after{content:'';position:absolute;top:0;right:0;width:55%;height:100%;background:linear-gradient(to right, transparent 0%, var(--off) 100%);}
+    .abt-txt{padding:6rem 3rem 6rem 1rem;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2;margin-left:-6rem;}
     .why-list{margin-top:1.8rem;display:flex;flex-direction:column;gap:.9rem;}
     .why-row{display:flex;align-items:flex-start;gap:.8rem;}
     .why-chk{color:var(--gold);flex-shrink:0;margin-top:2px;}
@@ -319,60 +311,22 @@ export default function Page() {
     .pstep-d{font-size:.78rem;color:var(--txt2);line-height:1.72;}
 
     /* DESKTOP CALL BUBBLE */
-    .call-bubble{
-      position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);
-      z-index:500;display:flex;align-items:center;gap:0;
-    }
-    .call-bubble-ring{
-      position:relative;width:52px;height:52px;border-radius:50%;
-      background:var(--gold);
-      display:flex;align-items:center;justify-content:center;
-      cursor:pointer;flex-shrink:0;
-      box-shadow:0 0 0 0 rgba(184,145,42,.6);
-      animation:ringPulse 2s ease-out infinite;
-      transition:all var(--tr);
-    }
+    .call-bubble{position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);z-index:500;display:flex;align-items:center;gap:0;}
+    .call-bubble-ring{position:relative;width:52px;height:52px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;box-shadow:0 0 0 0 rgba(184,145,42,.6);animation:ringPulse 2s ease-out infinite;transition:all var(--tr);}
     .call-bubble:hover .call-bubble-ring{background:var(--gold-lt);}
     .call-bubble-ring svg{animation:ringShake 2s ease-in-out infinite;}
-    @keyframes ringShake{
-      0%,100%{transform:rotate(0deg);}
-      10%{transform:rotate(-18deg);}
-      20%{transform:rotate(18deg);}
-      30%{transform:rotate(-12deg);}
-      40%{transform:rotate(12deg);}
-      50%{transform:rotate(0deg);}
-    }
-    @keyframes ringPulse{
-      0%{box-shadow:0 0 0 0 rgba(184,145,42,.6);}
-      70%{box-shadow:0 0 0 16px rgba(184,145,42,0);}
-      100%{box-shadow:0 0 0 0 rgba(184,145,42,0);}
-    }
-    /* Ripple rings */
-    .call-bubble-ring::before,.call-bubble-ring::after{
-      content:'';position:absolute;border-radius:50%;
-      border:2px solid rgba(184,145,42,.5);
-      animation:ripple 2s ease-out infinite;
-    }
+    @keyframes ringShake{0%,100%{transform:rotate(0deg);}10%{transform:rotate(-18deg);}20%{transform:rotate(18deg);}30%{transform:rotate(-12deg);}40%{transform:rotate(12deg);}50%{transform:rotate(0deg);}}
+    @keyframes ringPulse{0%{box-shadow:0 0 0 0 rgba(184,145,42,.6);}70%{box-shadow:0 0 0 16px rgba(184,145,42,0);}100%{box-shadow:0 0 0 0 rgba(184,145,42,0);}}
+    .call-bubble-ring::before,.call-bubble-ring::after{content:'';position:absolute;border-radius:50%;border:2px solid rgba(184,145,42,.5);animation:ripple 2s ease-out infinite;}
     .call-bubble-ring::before{width:68px;height:68px;animation-delay:0s;}
     .call-bubble-ring::after{width:86px;height:86px;animation-delay:.4s;}
-    @keyframes ripple{
-      0%{transform:scale(.85);opacity:1;}
-      100%{transform:scale(1.4);opacity:0;}
-    }
-    /* Label — slides in on hover */
-    .call-bubble-label{
-      background:var(--navy);color:#fff;
-      padding:.5rem 1rem;border-radius:4px 0 0 4px;
-      font-size:.72rem;font-weight:600;white-space:nowrap;
-      max-width:0;overflow:hidden;opacity:0;
-      transition:max-width .4s ease,opacity .4s ease,padding .4s ease;
-      pointer-events:none;
-    }
+    @keyframes ripple{0%{transform:scale(.85);opacity:1;}100%{transform:scale(1.4);opacity:0;}}
+    .call-bubble-label{background:var(--navy);color:#fff;padding:.5rem 1rem;border-radius:4px 0 0 4px;font-size:.72rem;font-weight:600;white-space:nowrap;max-width:0;overflow:hidden;opacity:0;transition:max-width .4s ease,opacity .4s ease,padding .4s ease;pointer-events:none;}
     .call-bubble:hover .call-bubble-label{max-width:180px;opacity:1;padding:.5rem 1rem;}
     .call-bubble-label span:first-child{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;opacity:.65;display:block;}
     .call-bubble-label span:last-child{font-size:.8rem;font-weight:700;display:block;color:var(--gold-lt);}
 
-    /* PROJECTS — Stonehaven style */
+    /* PROJECTS */
     .prj{background:var(--dark);padding:8rem 0;}
     .prj-wrap{max-width:100%;}
     .prj-header{max-width:1100px;margin:0 auto;padding:0 1.5rem;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem;margin-bottom:3rem;}
@@ -394,7 +348,6 @@ export default function Page() {
     .prj-card-stone:hover .prj-stone-desc{max-height:80px;opacity:1;}
     .prj-stone-arrow{display:inline-flex;align-items:center;gap:.4rem;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-lt);margin-top:.7rem;opacity:0;transform:translateY(6px);transition:all var(--tr);}
     .prj-card-stone:hover .prj-stone-arrow{opacity:1;transform:translateY(0);}
-    /* Desktop layout */
     .prj-desktop{display:block;}
     .prj-feat-row{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:3px;}
     .prj-feat-row .prj-left .prj-img-stone{height:623px;}
@@ -402,14 +355,13 @@ export default function Page() {
     .prj-right-stack .prj-img-stone{height:308px;}
     .prj-bot-row{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;}
     .prj-bot-row .prj-img-stone{height:300px;}
-    /* Mobile layout */
     .prj-mobile{display:none;padding:0 1.5rem;}
     .prj-mob-grid{display:grid;grid-template-columns:1fr;gap:1rem;}
     .prj-mob-grid .prj-img-stone{height:260px;}
     .prj-mob-grid .prj-stone-desc{max-height:60px!important;opacity:1!important;}
     .prj-mob-grid .prj-stone-arrow{opacity:1!important;transform:none!important;}
 
-        /* ANIMATED GRAPH SECTION */
+    /* ANIMATED GRAPH SECTION */
     .graph-sec{background:var(--navy);padding:8rem 1.5rem;}
     .graph-sec .sec-h{color:#fff;}.graph-sec .sec-p{color:rgba(255,255,255,.6);}
     .graph-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;margin-top:4rem;}
@@ -435,7 +387,6 @@ export default function Page() {
     .partners{background:var(--white);padding:5rem 0;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
     .partners-hd{text-align:center;padding:0 1.5rem;margin-bottom:3rem;}
     .partners-hd .sec-line{margin:0 auto 0;}
-    /* Marquee track */
     .partners-track-wrap{overflow:hidden;position:relative;}
     .partners-track-wrap::before,.partners-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none;}
     .partners-track-wrap::before{left:0;background:linear-gradient(to right,var(--white),transparent);}
@@ -443,14 +394,7 @@ export default function Page() {
     .partners-track{display:flex;gap:0;animation:marquee 28s linear infinite;width:max-content;}
     .partners-track:hover{animation-play-state:paused;}
     @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-    .partner-logo{
-      display:flex;align-items:center;justify-content:center;
-      padding:1.2rem 3rem;border-right:1px solid var(--border);
-      min-width:180px;height:90px;
-      filter:grayscale(100%) opacity(.5);
-      transition:filter var(--tr),transform var(--tr);
-      flex-shrink:0;
-    }
+    .partner-logo{display:flex;align-items:center;justify-content:center;padding:1.2rem 3rem;border-right:1px solid var(--border);min-width:180px;height:90px;filter:grayscale(100%) opacity(.5);transition:filter var(--tr),transform var(--tr);flex-shrink:0;}
     .partner-logo:hover{filter:grayscale(0%) opacity(1);transform:scale(1.05);}
     .partner-logo img{max-height:52px;max-width:130px;object-fit:contain;width:auto;}
 
@@ -520,7 +464,6 @@ export default function Page() {
       .abt-img::after{width:100%;height:50%;top:auto;bottom:0;background:linear-gradient(to bottom,transparent 0%,var(--off) 100%);}
       .abt-txt{padding:2rem 1.4rem 4rem;margin-left:0!important;}
       .proc-grid{grid-template-columns:repeat(3,1fr);}
-      .prj-grid-stone{grid-template-columns:1fr 1fr;}
       .graph-inner{grid-template-columns:1fr;}
       .partners-grid{grid-template-columns:repeat(3,1fr);}
       .cnt-g{grid-template-columns:1fr;gap:3rem;}
@@ -581,7 +524,6 @@ export default function Page() {
         <svg width={24} height={24} viewBox="0 0 24 24" fill="white"><path d={WA_PATH}/></svg>
       </a>
 
-
       {/* DESKTOP CALL BUBBLE */}
       <a href={`tel:${PHONE}`} className="call-bubble" aria-label="Call us" style={{textDecoration:'none'}}>
         <div className="call-bubble-label">
@@ -602,7 +544,15 @@ export default function Page() {
           <div className="nlogo-txt"><b>Saif Elite QS</b><span>Quantity Surveyor &amp; Cost Consultant</span></div>
         </div>
         <ul className="nlinks">
-          {NAV.map(n=>(<li key={n}><a href={`#${n.toLowerCase()}`} onClick={e=>{e.preventDefault();go(n.toLowerCase());}}>{n}</a></li>))}
+          {NAV.map(n=>(
+            <li key={n}>
+              {n === 'Procurement' ? (
+                <Link href="/procurement">{n}</Link>
+              ) : (
+                <a href={`#${n.toLowerCase()}`} onClick={e=>{e.preventDefault();go(n.toLowerCase());}}>{n}</a>
+              )}
+            </li>
+          ))}
         </ul>
         <button className="nbtn" onClick={()=>go('contact')}>Contact Us</button>
         <button className="burger" onClick={()=>setMenu(true)}><Svg d="M3 12h18M3 6h18M3 18h18" s={24}/></button>
@@ -611,10 +561,21 @@ export default function Page() {
       {/* MOBILE MENU */}
       <div className={`mob ${menu?'on':''}`}>
         <button className="mob-x" onClick={()=>setMenu(false)}><Svg d="M18 6 6 18M6 6l12 12" s={26}/></button>
-        {NAV.map(n=>(<a key={n} href="#" onClick={e=>{e.preventDefault();go(n.toLowerCase());}}>{n}</a>))}
+        {NAV.map(n=>(
+          <div key={n}>
+            {n === 'Procurement' ? (
+              <Link href="/procurement" onClick={()=>setMenu(false)}>{n}</Link>
+            ) : (
+              <a href="#" onClick={e=>{e.preventDefault();go(n.toLowerCase());}}>{n}</a>
+            )}
+          </div>
+        ))}
         <button className="btn-gold" onClick={()=>{go('contact');setMenu(false);}}>Contact Us</button>
       </div>
 
+      {/* Rest of the component remains the same... */}
+      {/* HERO, STATS, SERVICES, ABOUT, PROCESS, PROJECTS, GRAPH, PARTNERS, CTA, CONTACT, FOOTER sections */}
+      
       {/* HERO */}
       <section id="home" className="hero">
         {SLIDES.map((s,i)=>(
@@ -883,7 +844,6 @@ export default function Page() {
         </div>
         <div className="partners-track-wrap">
           <div className="partners-track">
-            {/* First set */}
             {[
               {src:'/images/emaar.png',alt:'Emaar'},
               {src:'/images/nakheel.png',alt:'Nakheel'},
@@ -898,7 +858,6 @@ export default function Page() {
                 <img src={l.src} alt={l.alt}/>
               </div>
             ))}
-            {/* Duplicate for seamless loop */}
             {[
               {src:'/images/emaar.png',alt:'Emaar2'},
               {src:'/images/nakheel.png',alt:'Nakheel2'},
