@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -8,51 +8,37 @@ const Svg = ({ d, s = 20, w = 1.5 }) => (
     strokeWidth={w} strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>
 );
 
-const PROC_ICONS = [
-  "M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 0 2-2h2a2 2 0 0 0 2 2",
-  "M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83",
-  "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8M10 9H8",
-  "M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z",
-  "M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3",
-];
+/* ===== DATA ===== */
 
-const WHAT_WE_OFFER = [
-  { n:'01', t:'Building Materials Supply', d:'Direct supply of premium building materials — structural steel, concrete, mechanical systems, electrical equipment, finishing materials and more. Direct relationships with manufacturers and suppliers globally.' },
-  { n:'02', t:'Procurement Strategy & Management', d:'End-to-end procurement guidance — from procurement route selection, tender strategy, supplier evaluation, contract negotiation and supply chain management throughout your project.' },
-  { n:'03', t:'Supply Chain Visibility & Control', d:'Complete transparency on material sourcing, logistics, delivery timelines and cost. Real-time tracking of your supply chain from factory to site.' },
-  { n:'04', t:'Cost Optimisation', d:'Leverage our global supplier relationships and negotiating power to secure best-in-class pricing without compromising quality or delivery reliability.' },
-];
-
-const PROC_STEPS = [
-  { t:'Initial Procurement Assessment', d:'We review your project specifications, budget, programme and procurement requirements to develop an optimal sourcing strategy.' },
-  { t:'Supplier Identification & Evaluation', d:'We identify qualified suppliers from our global network, conduct due diligence and provide recommendations on supplier selection.' },
-  { t:'Negotiation & Contracting', d:'We negotiate terms, pricing and delivery schedules with suppliers, preparing contracts that protect your interests and ensure compliance.' },
-  { t:'Supply Chain Management', d:'We manage the supply chain throughout delivery — tracking shipments, managing logistics and ensuring materials arrive on schedule and on budget.' },
-  { t:'Quality & Delivery Assurance', d:'We verify material quality upon receipt and manage any issues, ensuring what arrives on site meets specification and project requirements.' },
-];
-
-const MATERIALS = [
-  { n:'01', t:'Structural Materials', d:'Reinforced steel, concrete beams, columns and structural frameworks sourced from certified manufacturers globally.' },
-  { n:'02', t:'Mechanical Systems', d:'HVAC equipment, plumbing fixtures, pumps, compressors and boilers from leading international brands.' },
-  { n:'03', t:'Electrical Systems', d:'Cables, switchgear, lighting, transformers and distribution boards meeting international safety standards.' },
-  { n:'04', t:'Finishing Materials', d:'Premium marble, tiles, granite, paint, wood, insulation and glass for luxury and commercial projects.' },
-  { n:'05', t:'Safety & Temporary Works', d:'Scaffolding, safety equipment, temporary partitions and formwork systems for safe site delivery.' },
-  { n:'06', t:'Specialised Systems', d:'Fire suppression, security systems and smart building controls for modern construction requirements.' },
-];
-
-const REGIONS = [
-  { region:'Europe', countries:'Germany, UK, Ireland, Italy, Spain, France, Belgium, Netherlands' },
-  { region:'Asia-Pacific', countries:'China, India, Japan, Vietnam, Thailand, Singapore, Indonesia, Bangladesh, Australia, New Zealand' },
-  { region:'Middle East & Americas', countries:'UAE, Qatar, Saudi Arabia, Kuwait, USA, Canada' },
-];
-
-const WHY_PROCURE = [
-  'Direct manufacturer relationships — eliminating middlemen and reducing costs',
-  'Competitive pricing through volume negotiation and long-term partnerships',
-  'Reliable delivery schedules with supply chain tracking and contingency planning',
-  'Quality assurance and inspection protocols to ensure specification compliance',
-  'Customs clearance and logistics management for international shipments',
-  'Local market expertise combined with global sourcing capability',
+const OFFERS = [
+  {
+    n: '01',
+    t: 'Building Materials Supply',
+    d: 'Direct supply of premium construction materials sourced from certified manufacturers globally. From structural steel and concrete to finishing materials — we deliver to your project on schedule, on specification and on budget.',
+    img: '/images/image1.jpg',
+    pts: ['Certified manufacturer relationships', 'Material quality guaranteed', 'Reliable delivery scheduling'],
+  },
+  {
+    n: '02',
+    t: 'Procurement Strategy & Planning',
+    d: 'End-to-end procurement guidance grounded in our quantity surveying expertise. We develop procurement routes, prepare tender strategies and manage supplier evaluation to achieve best commercial value on every package.',
+    img: '/images/image10.webp',
+    pts: ['Strategic procurement planning', 'Tender management', 'Supplier evaluation & selection'],
+  },
+  {
+    n: '03',
+    t: 'Supply Chain Management',
+    d: 'Complete supply chain visibility from factory floor to construction site. We manage international logistics, customs clearance and delivery coordination so your project never stalls waiting for materials.',
+    img: '/images/image2.jpg',
+    pts: ['International logistics handling', 'Customs & clearance management', 'Real-time shipment tracking'],
+  },
+  {
+    n: '04',
+    t: 'Cost Optimisation & Value',
+    d: 'Leverage our global supplier network and volume negotiating power to secure best-in-class pricing. We benchmark every package against market rates to ensure you receive genuine commercial value.',
+    img: '/images/preview.jpg',
+    pts: ['Volume-negotiated pricing', 'Market benchmarking', 'Value engineering input'],
+  },
 ];
 
 const SAVINGS = [
@@ -60,6 +46,37 @@ const SAVINGS = [
   { v:'98%', l:'On-Time Delivery Rate' },
   { v:'18+', l:'Countries Covered' },
   { v:'200+', l:'Active Suppliers' },
+];
+
+const PROCESS_STEPS = [
+  { n:'01', t:'Initial Procurement Brief', d:'We review your project specifications, programme and budget parameters to fully understand the procurement requirement before any sourcing begins.' },
+  { n:'02', t:'Supplier Identification', d:'Drawing on our global supplier network across 18+ countries, we identify qualified suppliers and conduct due diligence on each shortlisted candidate.' },
+  { n:'03', t:'Negotiation & Contracting', d:'We negotiate commercial terms, delivery schedules and quality standards, preparing supply contracts that protect your interests throughout the engagement.' },
+  { n:'04', t:'Logistics & Delivery', d:'We coordinate international logistics, customs clearance and site delivery — managing every shipment through to arrival on your construction site.' },
+  { n:'05', t:'Quality & Final Verification', d:'All materials are verified against specification on receipt. We resolve any discrepancies directly with suppliers, ensuring you receive exactly what was contracted.' },
+];
+
+const MATERIALS = [
+  { t:'Structural Materials', d:'Reinforced steel, concrete, structural frameworks and rebar from certified mills.', img:'/images/image6.jpg' },
+  { t:'Mechanical Systems', d:'HVAC equipment, plumbing systems, pumps and industrial mechanical packages.', img:'/images/image5.jpg' },
+  { t:'Finishing Materials', d:'Premium marble, granite, tiles, glass and finishing materials for luxury projects.', img:'/images/image4.jpg' },
+  { t:'Safety & Scaffolding', d:'Site scaffolding systems, safety equipment, formwork and temporary works.', img:'/images/image3.jpg' },
+  { t:'Logistics & Shipping', d:'International freight, container shipping and consolidated cargo solutions worldwide.', img:'/images/image7.jpg' },
+];
+
+const REGIONS = [
+  { region:'Europe', countries:['Germany','UK','Ireland','Italy','Spain','France','Belgium','Netherlands'] },
+  { region:'Asia-Pacific', countries:['China','India','Japan','Vietnam','Thailand','Singapore','Indonesia','Australia','New Zealand'] },
+  { region:'Middle East & Americas', countries:['UAE','Qatar','Saudi Arabia','Kuwait','USA','Canada'] },
+];
+
+const WHY_PROCURE = [
+  'Direct manufacturer relationships eliminating middlemen and cost mark-ups',
+  'Volume-negotiated pricing leveraging our global procurement power',
+  'Reliable delivery schedules with contingency planning built in',
+  'Quality assurance and inspection protocols on every shipment',
+  'Customs clearance and logistics management for international cargo',
+  'Local UAE expertise combined with global sourcing capability',
 ];
 
 const CNTS = [
@@ -83,12 +100,12 @@ export default function ProcurementPage() {
     return () => window.removeEventListener('scroll', h);
   }, []);
 
-  /* scroll reveal */
   useEffect(() => {
     const run = () => document.querySelectorAll('.rv').forEach(el => {
       if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add('on');
     });
-    run(); window.addEventListener('scroll', run, { passive: true });
+    run();
+    window.addEventListener('scroll', run, { passive: true });
     return () => window.removeEventListener('scroll', run);
   }, []);
 
@@ -117,7 +134,7 @@ export default function ProcurementPage() {
     .d1{transition-delay:.06s}.d2{transition-delay:.12s}.d3{transition-delay:.18s}
     .d4{transition-delay:.24s}.d5{transition-delay:.3s}.d6{transition-delay:.36s}
 
-    /* FLOATING SOCIAL — desktop only */
+    /* ===== FLOATING SOCIAL (SAME AS HOME) ===== */
     .float-social{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:500;display:flex;flex-direction:column;gap:0;}
     .float-social a{width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--navy);color:#fff;text-decoration:none;transition:all var(--tr);border-bottom:1px solid rgba(255,255,255,.1);}
     .float-social a:hover{background:var(--gold);width:52px;}
@@ -126,14 +143,14 @@ export default function ProcurementPage() {
     .float-social a:first-child{border-radius:0 4px 0 0;}
     .float-social a:last-child{border-radius:0 0 4px 0;border-bottom:none;}
 
-    /* MOBILE FIXED BUTTONS */
+    /* MOB FIXED BUTTONS */
     .mob-call{position:fixed;left:1rem;bottom:1.4rem;z-index:500;width:48px;height:48px;border-radius:50%;background:var(--navy);color:#fff;display:none;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25);}
     .mob-wa{position:fixed;right:1rem;bottom:1.4rem;z-index:500;width:52px;height:52px;border-radius:50%;background:#25D366;color:#fff;display:none;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 14px rgba(37,211,102,.4);}
 
-    /* NAV — SAME AS HOME PAGE */
+    /* ===== NAV (SAME AS HOME) ===== */
     .nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;height:90px;padding:0 3rem;transition:all .4s;background:rgba(14,17,24,.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(184,145,42,.2);}
     .nav.sc{height:72px;}
-    .nlogo{display:flex;align-items:center;gap:.8rem;cursor:pointer;}
+    .nlogo{display:flex;align-items:center;gap:.8rem;cursor:pointer;text-decoration:none;}
     .nlogo-txt{display:flex;flex-direction:column;line-height:1.2;}
     .nlogo-txt b{font-size:.85rem;font-weight:700;color:#fff;letter-spacing:.05em;text-transform:uppercase;}
     .nlogo-txt span{font-size:.56rem;color:rgba(255,255,255,.5);letter-spacing:.2em;text-transform:uppercase;}
@@ -154,7 +171,7 @@ export default function ProcurementPage() {
     .mob a{color:#fff;text-decoration:none;font-size:1.3rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;transition:color var(--tr);cursor:pointer;}
     .mob a:hover{color:var(--gold-lt);}
 
-    /* BUTTONS — SAME AS HOME */
+    /* ===== BUTTONS (SAME AS HOME) ===== */
     .btn-gold{display:inline-flex;align-items:center;gap:.5rem;background:var(--gold);color:#fff;padding:.82rem 2.2rem;font-size:.74rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;font-family:inherit;transition:all var(--tr);position:relative;overflow:hidden;text-decoration:none;}
     .btn-gold::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .5s;}
     .btn-gold:hover{background:var(--gold-lt);transform:translateY(-2px);box-shadow:0 8px 24px rgba(184,145,42,.3);}
@@ -164,7 +181,7 @@ export default function ProcurementPage() {
     .btn-white{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:#fff;padding:.82rem 2.2rem;font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,.4);cursor:pointer;font-family:inherit;transition:all var(--tr);text-decoration:none;}
     .btn-white:hover{background:rgba(255,255,255,.1);border-color:#fff;}
 
-    /* HERO — SAME STYLE AS HOME */
+    /* ===== HERO (SAME AS HOME) ===== */
     .hero{position:relative;width:100%;height:100vh;min-height:640px;overflow:hidden;}
     .hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to right,rgba(10,13,20,.88) 50%,rgba(10,13,20,.45) 100%);}
     .hero-cnt{position:relative;z-index:2;height:100%;max-width:1200px;margin:0 auto;padding:0 3rem;display:flex;flex-direction:column;justify-content:center;}
@@ -175,7 +192,7 @@ export default function ProcurementPage() {
     .hero-sub{font-size:1rem;color:rgba(255,255,255,.72);font-weight:300;max-width:500px;margin-bottom:3rem;line-height:1.75;}
     .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
 
-    /* STATS BAND */
+    /* ===== STATS BAND (SAME AS HOME) ===== */
     .statsband{background:var(--white);padding:3.5rem 1.5rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
     .stats-g{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
     .stat{text-align:center;padding:1rem 1.5rem;position:relative;}
@@ -183,80 +200,124 @@ export default function ProcurementPage() {
     .stat-v{font-size:2.6rem;font-weight:700;color:var(--gold);font-family:Georgia,serif;line-height:1;margin-bottom:.5rem;}
     .stat-l{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--txt2);}
 
-    /* SECTION — SAME AS HOME */
-    section{padding:8rem 1.5rem;}
-    .wrap{max-width:1100px;margin:0 auto;}
-    .sec-tag{font-size:.6rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem;}
+    /* ===== SECTION BASE (SAME FONT/TEXT STYLE AS HOME) ===== */
+    section{padding:7rem 1.5rem;}
+    .wrap{max-width:1200px;margin:0 auto;}
+    .sec-tag{font-size:.6rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem;display:block;}
     .sec-h{font-size:clamp(1.6rem,2.8vw,2.4rem);font-weight:700;color:var(--navy);line-height:1.18;margin-bottom:.9rem;font-family:Georgia,serif;}
     .sec-line{width:40px;height:3px;background:var(--gold);margin-bottom:1.2rem;}
     .sec-p{color:var(--txt2);font-size:.9rem;font-weight:400;line-height:1.82;max-width:560px;}
 
-    /* SERVICES (What We Offer) — SAME AS HOME SVC */
-    .svc{background:var(--navy);}
-    .svc .sec-h{color:#fff;}.svc .sec-p{color:rgba(255,255,255,.6);}
-    .svc-hd{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:2rem;margin-bottom:4rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,.1);}
-    .svc-grid{display:grid;grid-template-columns:repeat(4,1fr);}
-    .svc-card{padding:2rem 1.6rem;border-right:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden;transition:background var(--tr),transform var(--tr);}
-    .svc-card:nth-child(4n){border-right:none;}.svc-card:nth-last-child(-n+4){border-bottom:none;}
-    .svc-card::after{content:'';position:absolute;top:0;left:0;width:0;height:3px;background:linear-gradient(to right,var(--gold),var(--gold-lt));transition:width .5s ease;}
-    .svc-card:hover{background:rgba(255,255,255,.04);transform:translateY(-3px);}
-    .svc-card:hover::after{width:100%;}
-    .svc-n{font-size:.58rem;color:var(--gold-lt);letter-spacing:.22em;font-weight:700;margin-bottom:.9rem;opacity:.7;}
-    .svc-t{font-size:.9rem;font-weight:700;color:#fff;margin-bottom:.6rem;font-family:Georgia,serif;line-height:1.3;}
-    .svc-d{font-size:.8rem;color:rgba(255,255,255,.55);line-height:1.75;}
+    /* ============================================ */
+    /* ===== UNIQUE TEMPLATE 1: OFFERS — ALTERNATING SPLIT ===== */
+    /* ============================================ */
+    .offers{background:var(--off);padding:7rem 1.5rem;}
+    .offers-head{text-align:center;margin-bottom:5rem;}
+    .offers-head .sec-line{margin:1rem auto 1.2rem;}
+    .offers-head .sec-p{margin:0 auto;}
+    .offer-row{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:4rem;background:var(--white);box-shadow:0 4px 24px rgba(0,0,0,.04);overflow:hidden;}
+    .offer-row:last-child{margin-bottom:0;}
+    .offer-row.rev{direction:rtl;}
+    .offer-row.rev > *{direction:ltr;}
+    .offer-img{position:relative;min-height:420px;overflow:hidden;}
+    .offer-img img{object-fit:cover;transition:transform 1s ease;}
+    .offer-row:hover .offer-img img{transform:scale(1.05);}
+    .offer-img::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(184,145,42,.05),transparent 60%);}
+    .offer-txt{padding:3.5rem 3rem;display:flex;flex-direction:column;justify-content:center;position:relative;}
+    .offer-n{font-size:4.5rem;font-weight:700;color:var(--gold);font-family:Georgia,serif;line-height:1;margin-bottom:1rem;opacity:.18;position:absolute;top:1.5rem;right:2rem;}
+    .offer-t{font-size:1.5rem;font-weight:700;color:var(--navy);font-family:Georgia,serif;margin-bottom:1rem;line-height:1.25;}
+    .offer-d{font-size:.88rem;color:var(--txt2);line-height:1.85;margin-bottom:1.6rem;}
+    .offer-pts{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+    .offer-pts li{display:flex;align-items:flex-start;gap:.6rem;font-size:.82rem;color:var(--txt2);}
+    .offer-pts li::before{content:'';width:6px;height:6px;background:var(--gold);border-radius:50%;flex-shrink:0;margin-top:8px;}
 
-    /* ABOUT (About Procurement) — SAME AS HOME ABT */
-    .abt{background:var(--off);padding:0;overflow:hidden;}
-    .abt-g{display:grid;grid-template-columns:1fr 1fr;min-height:580px;position:relative;}
-    .abt-img{position:relative;overflow:hidden;min-height:500px;}
-    .abt-img img{object-fit:cover;object-position:center;}
-    .abt-img::after{content:'';position:absolute;top:0;right:0;width:55%;height:100%;background:linear-gradient(to right, transparent 0%, var(--off) 100%);}
-    .abt-txt{padding:6rem 3rem 6rem 1rem;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2;margin-left:-6rem;}
-    .why-list{margin-top:1.8rem;display:flex;flex-direction:column;gap:.9rem;}
-    .why-row{display:flex;align-items:flex-start;gap:.8rem;}
-    .why-chk{color:var(--gold);flex-shrink:0;margin-top:2px;}
-    .why-t{font-size:.84rem;color:var(--txt2);line-height:1.6;}
+    /* ============================================ */
+    /* ===== UNIQUE TEMPLATE 2: WHY US — IMAGE BG WITH FLOATING CARD ===== */
+    /* ============================================ */
+    .why{position:relative;padding:0;overflow:hidden;background:var(--dark);}
+    .why-inner{display:grid;grid-template-columns:1fr 1fr;min-height:680px;align-items:stretch;}
+    .why-img{position:relative;overflow:hidden;}
+    .why-img img{object-fit:cover;}
+    .why-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(14,17,24,.4),rgba(14,17,24,.85));}
+    .why-card{padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;background:var(--dark);position:relative;}
+    .why-card::before{content:'';position:absolute;top:0;left:0;width:60px;height:3px;background:var(--gold);}
+    .why-card .sec-tag{color:var(--gold-lt);}
+    .why-card .sec-h{color:#fff;font-size:clamp(1.8rem,3vw,2.6rem);}
+    .why-card .sec-p{color:rgba(255,255,255,.65);}
+    .why-list-pro{margin-top:2rem;display:flex;flex-direction:column;gap:1rem;}
+    .why-li{display:flex;align-items:flex-start;gap:.9rem;padding:1rem 1.2rem;background:rgba(255,255,255,.04);border-left:2px solid var(--gold);transition:all var(--tr);}
+    .why-li:hover{background:rgba(255,255,255,.08);border-left-color:var(--gold-lt);transform:translateX(4px);}
+    .why-li-chk{color:var(--gold-lt);flex-shrink:0;margin-top:2px;}
+    .why-li-t{font-size:.82rem;color:rgba(255,255,255,.8);line-height:1.6;}
 
-    /* PROCESS — SAME AS HOME PROC */
-    .proc{background:var(--white);}
-    .proc-grid{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--border);margin-top:3.5rem;}
-    .pstep{padding:2.2rem 1.6rem;border-right:1px solid var(--border);position:relative;transition:background var(--tr),transform var(--tr);}
-    .pstep:last-child{border-right:none;}
-    .pstep:hover{background:var(--off);transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.06);}
-    .pstep-bar{position:absolute;bottom:0;left:0;width:0;height:3px;background:var(--gold);transition:width .5s ease;}
-    .pstep:hover .pstep-bar{width:100%;}
-    .pstep-ico{width:44px;height:44px;border:1px solid rgba(184,145,42,.3);display:flex;align-items:center;justify-content:center;color:var(--gold);margin-bottom:1.1rem;transition:all var(--tr);}
-    .pstep:hover .pstep-ico{background:var(--gold);color:#fff;border-color:var(--gold);}
-    .pstep-t{font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:.6rem;font-family:Georgia,serif;}
-    .pstep-d{font-size:.78rem;color:var(--txt2);line-height:1.72;}
+    /* ============================================ */
+    /* ===== UNIQUE TEMPLATE 3: PROCESS — VERTICAL TIMELINE ===== */
+    /* ============================================ */
+    .proc{background:var(--white);padding:7rem 1.5rem;}
+    .proc-head{text-align:center;margin-bottom:4rem;}
+    .proc-head .sec-line{margin:1rem auto 1.2rem;}
+    .proc-head .sec-p{margin:0 auto;}
+    .timeline{position:relative;max-width:900px;margin:0 auto;padding:2rem 0;}
+    .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--gold),var(--gold-lt),var(--gold),transparent);transform:translateX(-50%);}
+    .tl-row{position:relative;display:grid;grid-template-columns:1fr 100px 1fr;gap:0;margin-bottom:3rem;align-items:center;}
+    .tl-row:last-child{margin-bottom:0;}
+    .tl-content{padding:1.8rem 2rem;background:var(--off);border:1px solid var(--border);position:relative;transition:all var(--tr);}
+    .tl-content:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.08);}
+    .tl-content::after{content:'';position:absolute;top:50%;width:30px;height:2px;background:var(--gold);transform:translateY(-50%);}
+    .tl-row.left .tl-content::after{right:-30px;}
+    .tl-row.right .tl-content::after{left:-30px;}
+    .tl-row.left .tl-content{grid-column:1;text-align:right;}
+    .tl-row.right .tl-content{grid-column:3;text-align:left;}
+    .tl-circle{grid-column:2;display:flex;align-items:center;justify-content:center;width:70px;height:70px;border-radius:50%;background:var(--gold);color:#fff;font-family:Georgia,serif;font-size:1.4rem;font-weight:700;margin:0 auto;position:relative;z-index:2;box-shadow:0 6px 24px rgba(184,145,42,.3);border:4px solid var(--white);}
+    .tl-t{font-size:1.05rem;font-weight:700;color:var(--navy);font-family:Georgia,serif;margin-bottom:.5rem;}
+    .tl-d{font-size:.82rem;color:var(--txt2);line-height:1.75;}
 
-    /* MATERIALS — Using SVC style on light bg */
-    .mat{background:var(--off);}
-    .mat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border);margin-top:3.5rem;background:var(--white);}
-    .mat-card{padding:2.2rem 1.8rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden;transition:background var(--tr),transform var(--tr);}
-    .mat-card:nth-child(3n){border-right:none;}
-    .mat-card:nth-last-child(-n+3){border-bottom:none;}
-    .mat-card::after{content:'';position:absolute;top:0;left:0;width:0;height:3px;background:linear-gradient(to right,var(--gold),var(--gold-lt));transition:width .5s ease;}
-    .mat-card:hover{background:var(--off);transform:translateY(-3px);}
-    .mat-card:hover::after{width:100%;}
-    .mat-n{font-size:.58rem;color:var(--gold);letter-spacing:.22em;font-weight:700;margin-bottom:.9rem;}
-    .mat-t{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:.6rem;font-family:Georgia,serif;}
-    .mat-d{font-size:.8rem;color:var(--txt2);line-height:1.75;}
+    /* ============================================ */
+    /* ===== UNIQUE TEMPLATE 4: MATERIALS — IMAGE CARDS WITH HOVER OVERLAY ===== */
+    /* ============================================ */
+    .mat{background:var(--dark);padding:7rem 1.5rem;}
+    .mat-head{text-align:center;margin-bottom:4rem;}
+    .mat-head .sec-h{color:#fff;}
+    .mat-head .sec-line{margin:1rem auto 1.2rem;}
+    .mat-head .sec-p{margin:0 auto;color:rgba(255,255,255,.65);}
+    .mat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1200px;margin:0 auto;}
+    .mat-card{position:relative;height:340px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,.05);}
+    .mat-card-img{position:absolute;inset:0;}
+    .mat-card-img img{object-fit:cover;transition:transform .7s ease;}
+    .mat-card:hover .mat-card-img img{transform:scale(1.1);}
+    .mat-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,13,20,.95) 0%,rgba(10,13,20,.5) 50%,rgba(10,13,20,.2) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.8rem;transition:background .4s ease;}
+    .mat-card:hover .mat-card-overlay{background:linear-gradient(to top,rgba(10,13,20,.97) 0%,rgba(10,13,20,.85) 50%,rgba(10,13,20,.45) 100%);}
+    .mat-card-tag{font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:.5rem;border-left:2px solid var(--gold);padding-left:.55rem;}
+    .mat-card-t{font-size:1.15rem;font-weight:700;color:#fff;font-family:Georgia,serif;margin-bottom:.5rem;line-height:1.25;}
+    .mat-card-d{font-size:.78rem;color:rgba(255,255,255,.7);line-height:1.65;max-height:0;overflow:hidden;opacity:0;transition:max-height .4s ease,opacity .4s ease;}
+    .mat-card:hover .mat-card-d{max-height:120px;opacity:1;margin-top:.5rem;}
 
-    /* REGIONS */
-    .reg{background:var(--dark);}
-    .reg .sec-h{color:#fff;}.reg .sec-p{color:rgba(255,255,255,.6);}
-    .reg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:3.5rem;}
-    .reg-card{padding:2.4rem 1.8rem;border-right:1px solid rgba(255,255,255,.08);position:relative;transition:background var(--tr);}
-    .reg-card:last-child{border-right:none;}
-    .reg-card:hover{background:rgba(255,255,255,.03);}
-    .reg-card::after{content:'';position:absolute;top:0;left:0;width:0;height:3px;background:linear-gradient(to right,var(--gold),var(--gold-lt));transition:width .5s ease;}
-    .reg-card:hover::after{width:100%;}
-    .reg-name{font-size:1.1rem;font-weight:700;color:var(--gold-lt);font-family:Georgia,serif;margin-bottom:.8rem;}
-    .reg-c{font-size:.82rem;color:rgba(255,255,255,.6);line-height:1.85;}
+    /* ============================================ */
+    /* ===== UNIQUE TEMPLATE 5: GLOBAL NETWORK — MAP BG WITH PILLS ===== */
+    /* ============================================ */
+    .net{position:relative;padding:7rem 1.5rem;background:#050811;overflow:hidden;}
+    .net-bg{position:absolute;inset:0;opacity:.4;}
+    .net-bg img{object-fit:cover;}
+    .net-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 0%,#050811 80%);}
+    .net-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;}
+    .net-head{text-align:center;margin-bottom:4rem;}
+    .net-head .sec-tag{color:var(--gold-lt);}
+    .net-head .sec-h{color:#fff;}
+    .net-head .sec-line{margin:1rem auto 1.2rem;}
+    .net-head .sec-p{margin:0 auto;color:rgba(255,255,255,.65);}
+    .reg-blocks{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+    .reg-block{padding:2rem;background:rgba(255,255,255,.03);backdrop-filter:blur(10px);border:1px solid rgba(184,145,42,.15);transition:all var(--tr);}
+    .reg-block:hover{border-color:var(--gold);background:rgba(255,255,255,.05);transform:translateY(-4px);}
+    .reg-name{font-size:1.1rem;font-weight:700;color:var(--gold-lt);font-family:Georgia,serif;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem;}
+    .reg-name::before{content:'';width:6px;height:6px;background:var(--gold);border-radius:50%;box-shadow:0 0 12px var(--gold);}
+    .reg-pills{display:flex;flex-wrap:wrap;gap:.4rem;}
+    .reg-pill{font-size:.72rem;color:rgba(255,255,255,.75);padding:.32rem .8rem;background:rgba(184,145,42,.1);border:1px solid rgba(184,145,42,.2);border-radius:999px;transition:all var(--tr);}
+    .reg-pill:hover{background:var(--gold);color:#fff;border-color:var(--gold);}
 
-    /* CTA */
-    .cta{position:relative;overflow:hidden;padding:8rem 1.5rem;text-align:center;}
+    /* ============================================ */
+    /* ===== CTA (SAME AS HOME) ===== */
+    /* ============================================ */
+    .cta{position:relative;overflow:hidden;padding:7rem 1.5rem;text-align:center;}
     .cta-overlay{position:absolute;inset:0;z-index:1;background:rgba(10,13,20,.82);}
     .cta-in{position:relative;z-index:2;max-width:700px;margin:0 auto;}
     .cta-tag{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(212,170,64,.85);margin-bottom:1rem;}
@@ -264,7 +325,7 @@ export default function ProcurementPage() {
     .cta-p{color:rgba(255,255,255,.65);font-size:.9rem;font-weight:300;margin-bottom:2.5rem;line-height:1.8;}
     .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
 
-    /* CONTACT — SAME AS HOME CNT */
+    /* ===== CONTACT ===== */
     .cnt{background:var(--white);}
     .cnt-g{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:4rem;}
     .cnt-row{display:flex;gap:1rem;align-items:flex-start;}
@@ -272,7 +333,7 @@ export default function ProcurementPage() {
     .cnt-lbl{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.2rem;}
     .cnt-val{font-size:.82rem;color:var(--txt);font-weight:500;}
 
-    /* FOOTER — SAME AS HOME */
+    /* ===== FOOTER (SAME AS HOME) ===== */
     .ftr{background:var(--dark);}
     .ftr-main{padding:5rem 1.5rem 3rem;}
     .ftr-main-in{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3.5rem;}
@@ -295,24 +356,19 @@ export default function ProcurementPage() {
     .ftr-bot p{font-size:.7rem;color:rgba(255,255,255,.2);}
     .ftr-bot .hl{color:var(--gold-lt);}
 
-    /* RESPONSIVE */
+    /* ===== RESPONSIVE ===== */
     @media(max-width:1100px){
       .nav{padding:0 2rem;}
       .hero-cnt{padding:0 2rem;}
-      .svc-grid{grid-template-columns:repeat(2,1fr);}
-      .svc-card:nth-child(4n){border-right:1px solid rgba(255,255,255,.08);}
-      .svc-card:nth-child(2n){border-right:none!important;}
-      .abt-g{grid-template-columns:1fr;}
-      .abt-img{min-height:280px;}
-      .abt-img::after{width:100%;height:50%;top:auto;bottom:0;background:linear-gradient(to bottom,transparent 0%,var(--off) 100%);}
-      .abt-txt{padding:2rem 1.4rem 4rem;margin-left:0!important;}
-      .proc-grid{grid-template-columns:repeat(3,1fr);}
+      .offer-row{grid-template-columns:1fr;}
+      .offer-row.rev{direction:ltr;}
+      .offer-img{min-height:300px;}
+      .offer-txt{padding:2.5rem 2rem;}
+      .why-inner{grid-template-columns:1fr;}
+      .why-img{min-height:300px;}
+      .why-card{padding:3rem 2rem;}
       .mat-grid{grid-template-columns:repeat(2,1fr);}
-      .mat-card:nth-child(3n){border-right:1px solid var(--border);}
-      .mat-card:nth-child(2n){border-right:none;}
-      .reg-grid{grid-template-columns:1fr;}
-      .reg-card{border-right:none;border-bottom:1px solid rgba(255,255,255,.08);}
-      .reg-card:last-child{border-bottom:none;}
+      .reg-blocks{grid-template-columns:1fr;}
       .cnt-g{grid-template-columns:repeat(2,1fr);}
       .ftr-main-in{grid-template-columns:1fr 1fr;}
     }
@@ -325,13 +381,16 @@ export default function ProcurementPage() {
       .hero-cnt{padding:0 1.4rem;}
       .stats-g{grid-template-columns:1fr 1fr;}
       .stat:nth-child(2)::after{display:none;}
-      .svc-grid{grid-template-columns:1fr;}
-      .svc-card{border-right:none!important;}
-      .proc-grid{grid-template-columns:1fr;}
-      .pstep{border-right:none;border-bottom:1px solid var(--border);}
-      .pstep:last-child{border-bottom:none;}
+      .offer-txt{padding:2rem 1.4rem;}
+      .offer-n{font-size:3rem;top:1rem;right:1rem;}
+      .timeline::before{left:30px;}
+      .tl-row{grid-template-columns:60px 1fr!important;gap:1rem;}
+      .tl-row.left .tl-content,.tl-row.right .tl-content{grid-column:2!important;text-align:left!important;}
+      .tl-row.left .tl-content::after{left:-30px;right:auto;}
+      .tl-circle{grid-column:1!important;width:60px;height:60px;font-size:1.1rem;}
       .mat-grid{grid-template-columns:1fr;}
-      .mat-card{border-right:none!important;}
+      .mat-card{height:280px;}
+      .mat-card-d{max-height:120px!important;opacity:1!important;margin-top:.5rem!important;}
       .cnt-g{grid-template-columns:1fr;}
       .ftr-main-in{grid-template-columns:1fr;gap:2.5rem;}
       section{padding:5rem 1.2rem;}
@@ -343,14 +402,13 @@ export default function ProcurementPage() {
     }
   `;
 
-  /* WhatsApp SVG path */
   const WA_PATH = "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z M11.5 2C6.253 2 2 6.253 2 11.5c0 1.894.549 3.659 1.497 5.145L2 22l5.488-1.478A9.46 9.46 0 0 0 11.5 21C16.747 21 21 16.747 21 11.5S16.747 2 11.5 2z";
 
   return (
     <>
       <style>{CSS}</style>
 
-      {/* FLOATING SOCIAL — desktop */}
+      {/* FLOATING SOCIAL (SAME AS HOME) */}
       <div className="float-social">
         <a href={WA_LINK} target="_blank" rel="noreferrer" className="wa" title="WhatsApp">
           <svg width={20} height={20} viewBox="0 0 24 24" fill="white"><path d={WA_PATH}/></svg>
@@ -361,15 +419,15 @@ export default function ProcurementPage() {
         <a href="https://www.facebook.com/people/Saif-Elite-QS/61590199756177/" target="_blank" rel="noreferrer" title="Facebook"><Svg d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" s={18}/></a>
       </div>
 
-      {/* MOBILE FIXED BUTTONS */}
+      {/* MOB BUTTONS */}
       <a href={`tel:${PHONE}`} className="mob-call" aria-label="Call"><Svg d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 11.9a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.93 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z" s={22}/></a>
       <a href={WA_LINK} target="_blank" rel="noreferrer" className="mob-wa" aria-label="WhatsApp">
         <svg width={24} height={24} viewBox="0 0 24 24" fill="white"><path d={WA_PATH}/></svg>
       </a>
 
-      {/* NAV — SAME AS HOME PAGE */}
+      {/* NAV (SAME AS HOME) */}
       <nav className={`nav ${sc?'sc':''}`}>
-        <Link href="/" className="nlogo" style={{textDecoration:'none'}}>
+        <Link href="/" className="nlogo">
           <Image src="/images/QS_logo_bg.png" alt="Saif Elite QS" width={100} height={100} style={{objectFit:'contain'}} priority/>
           <div className="nlogo-txt"><b>Saif Elite QS</b><span>Quantity Surveyor &amp; Cost Consultant</span></div>
         </Link>
@@ -407,10 +465,10 @@ export default function ProcurementPage() {
         <button className="btn-gold" onClick={()=>goHome('contact')}>Contact Us</button>
       </div>
 
-      {/* HERO — SAME STYLE AS HOME, using existing image */}
+      {/* HERO (SAME AS HOME) */}
       <section className="hero">
         <div style={{position:'absolute',inset:0,zIndex:0}}>
-          <Image src="/images/hero_section2.jpg" alt="Procurement" fill sizes="100vw" style={{objectFit:'cover',objectPosition:'center'}} priority/>
+          <Image src="/images/dubai_port.jpg" alt="Procurement" fill sizes="100vw" style={{objectFit:'cover',objectPosition:'center'}} priority/>
         </div>
         <div className="hero-overlay"/>
         <div className="hero-cnt">
@@ -431,93 +489,130 @@ export default function ProcurementPage() {
         </div>
       </div>
 
-      {/* WHAT WE OFFER — SAME STYLE AS HOME SERVICES */}
-      <section id="offer" className="svc">
+      {/* ===== UNIQUE TEMPLATE 1: OFFERS - ALTERNATING SPLIT ===== */}
+      <section id="offer" className="offers">
         <div className="wrap">
-          <div className="svc-hd">
-            <div className="rv">
-              <div className="sec-tag">What We Offer</div>
-              <h2 className="sec-h">Procurement Services</h2>
-              <div className="sec-line"/>
-              <p className="sec-p">From building material supply to complete supply chain management — a full procurement service tailored to your project requirements.</p>
-            </div>
-            <button className="btn-ol-gold rv d2" onClick={()=>goHome('contact')}>Discuss Your Project &nbsp;<Svg d="M5 12h14M12 5l7 7-7 7" s={13}/></button>
+          <div className="offers-head rv">
+            <div className="sec-tag">What We Offer</div>
+            <h2 className="sec-h">Procurement Services</h2>
+            <div className="sec-line"/>
+            <p className="sec-p">From direct material supply to complete supply chain management — a full procurement service tailored to your project requirements.</p>
           </div>
-          <div className="svc-grid">
-            {WHAT_WE_OFFER.map((s,i)=>(<div key={s.n} className={`svc-card rv d${(i%4)+1}`}><div className="svc-n">{s.n}</div><div className="svc-t">{s.t}</div><div className="svc-d">{s.d}</div></div>))}
-          </div>
-        </div>
-      </section>
-
-      {/* ABOUT — SAME STYLE AS HOME ABOUT, using existing image */}
-      <section className="abt">
-        <div style={{maxWidth:'100%'}}>
-          <div className="abt-g">
-            <div className="abt-img rv rl" style={{position:'relative'}}>
-              <Image src="/images/about_section1.jpeg" alt="About Procurement" fill sizes="50vw" style={{objectFit:'cover',objectPosition:'center'}}/>
-            </div>
-            <div className="abt-txt rv rr">
-              <div className="sec-tag">Why Choose Us</div>
-              <h2 className="sec-h">Strategic Procurement Partner</h2>
-              <div className="sec-line"/>
-              <p className="sec-p" style={{marginBottom:'1rem'}}>Saif Elite QS provides comprehensive procurement and building materials supply services backed by our quantity surveying expertise — ensuring every material sourced delivers value, quality and reliability.</p>
-              <p className="sec-p" style={{marginBottom:'1rem'}}>With direct manufacturer relationships across 18+ countries and a deep understanding of construction project requirements, we deliver procurement solutions that reduce costs and minimise supply chain risk.</p>
-              <div className="why-list">
-                {WHY_PROCURE.map((w,i)=>(<div key={i} className="why-row"><span className="why-chk"><Svg d="M20 6 9 17l-5-5" s={14} w={2.5}/></span><span className="why-t">{w}</span></div>))}
+          {OFFERS.map((o,i)=>(
+            <div key={o.n} className={`offer-row rv ${i%2===1?'rev':''}`}>
+              <div className="offer-img">
+                <Image src={o.img} alt={o.t} fill sizes="50vw"/>
               </div>
-              <div style={{marginTop:'2.2rem'}}><button className="btn-gold" onClick={()=>goHome('contact')}>Work With Us &nbsp;<Svg d="M5 12h14M12 5l7 7-7 7" s={14}/></button></div>
+              <div className="offer-txt">
+                <span className="offer-n">{o.n}</span>
+                <h3 className="offer-t">{o.t}</h3>
+                <p className="offer-d">{o.d}</p>
+                <ul className="offer-pts">
+                  {o.pts.map(p=><li key={p}>{p}</li>)}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ===== UNIQUE TEMPLATE 2: WHY US - IMAGE BG + FLOATING CARD ===== */}
+      <section className="why">
+        <div className="why-inner">
+          <div className="why-img rv rl">
+            <Image src="/images/image9.jpg" alt="Why Choose Us" fill sizes="50vw"/>
+          </div>
+          <div className="why-card rv rr">
+            <div className="sec-tag">Why Choose Us</div>
+            <h2 className="sec-h">Strategic Procurement Partner</h2>
+            <div className="sec-line"/>
+            <p className="sec-p" style={{marginBottom:'.6rem'}}>Saif Elite QS combines quantity surveying expertise with global procurement capability — delivering materials and services that drive genuine project value.</p>
+            <div className="why-list-pro">
+              {WHY_PROCURE.map((w,i)=>(
+                <div key={i} className="why-li">
+                  <span className="why-li-chk"><Svg d="M20 6 9 17l-5-5" s={14} w={2.5}/></span>
+                  <span className="why-li-t">{w}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* PROCESS — SAME STYLE AS HOME PROCESS */}
+      {/* ===== UNIQUE TEMPLATE 3: PROCESS - VERTICAL TIMELINE ===== */}
       <section className="proc">
         <div className="wrap">
-          <div className="rv">
+          <div className="proc-head rv">
             <div className="sec-tag">How We Work</div>
             <h2 className="sec-h">Our Procurement Process</h2>
             <div className="sec-line"/>
-            <p className="sec-p">A structured, transparent approach to procurement giving you complete visibility from initial assessment through to final delivery.</p>
+            <p className="sec-p">A structured five-stage approach giving you complete visibility from initial brief through to final delivery on site.</p>
           </div>
-          <div className="proc-grid">
-            {PROC_STEPS.map((p,i)=>(<div key={p.t} className={`pstep rv d${i+1}`}><div className="pstep-bar"/><div className="pstep-ico"><Svg d={PROC_ICONS[i]} s={22} w={1.5}/></div><div className="pstep-t">{p.t}</div><div className="pstep-d">{p.d}</div></div>))}
+          <div className="timeline">
+            {PROCESS_STEPS.map((s,i)=>(
+              <div key={s.n} className={`tl-row ${i%2===0?'left':'right'} rv`}>
+                <div className="tl-content">
+                  <div className="tl-t">{s.t}</div>
+                  <div className="tl-d">{s.d}</div>
+                </div>
+                <div className="tl-circle">{s.n}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* MATERIALS — SAME STYLE AS HOME SECTIONS */}
+      {/* ===== UNIQUE TEMPLATE 4: MATERIALS - IMAGE CARDS HOVER ===== */}
       <section className="mat">
-        <div className="wrap">
-          <div className="rv">
-            <div className="sec-tag">What We Supply</div>
-            <h2 className="sec-h">Building Materials</h2>
+        <div className="mat-head rv">
+          <div className="sec-tag" style={{color:'var(--gold-lt)'}}>What We Supply</div>
+          <h2 className="sec-h">Building Materials</h2>
+          <div className="sec-line"/>
+          <p className="sec-p">A comprehensive range of construction materials sourced directly from certified manufacturers — covering every requirement of modern construction projects.</p>
+        </div>
+        <div className="mat-grid">
+          {MATERIALS.map((m,i)=>(
+            <div key={m.t} className="mat-card rv">
+              <div className="mat-card-img">
+                <Image src={m.img} alt={m.t} fill sizes="33vw"/>
+              </div>
+              <div className="mat-card-overlay">
+                <div className="mat-card-tag">Category {String(i+1).padStart(2,'0')}</div>
+                <div className="mat-card-t">{m.t}</div>
+                <div className="mat-card-d">{m.d}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ===== UNIQUE TEMPLATE 5: GLOBAL NETWORK - MAP BG WITH PILLS ===== */}
+      <section className="net">
+        <div className="net-bg">
+          <Image src="/images/image8.jpg" alt="Global Network" fill sizes="100vw"/>
+        </div>
+        <div className="net-inner">
+          <div className="net-head rv">
+            <div className="sec-tag">Global Reach</div>
+            <h2 className="sec-h">Worldwide Supplier Network</h2>
             <div className="sec-line"/>
-            <p className="sec-p">A comprehensive range of construction materials sourced directly from certified manufacturers — covering every requirement of modern construction projects.</p>
+            <p className="sec-p">Direct supplier relationships across Europe, Asia-Pacific and the Middle East — sourcing materials where quality and value align.</p>
           </div>
-          <div className="mat-grid">
-            {MATERIALS.map((m,i)=>(<div key={m.n} className={`mat-card rv d${(i%3)+1}`}><div className="mat-n">{m.n}</div><div className="mat-t">{m.t}</div><div className="mat-d">{m.d}</div></div>))}
+          <div className="reg-blocks">
+            {REGIONS.map((r,i)=>(
+              <div key={r.region} className={`reg-block rv d${i+1}`}>
+                <div className="reg-name">{r.region}</div>
+                <div className="reg-pills">
+                  {r.countries.map(c=>(<span key={c} className="reg-pill">{c}</span>))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* REGIONS — DARK SECTION */}
-      <section className="reg">
-        <div className="wrap">
-          <div className="rv">
-            <div className="sec-tag" style={{color:'var(--gold-lt)'}}>Global Reach</div>
-            <h2 className="sec-h">Supplier Network</h2>
-            <div className="sec-line"/>
-            <p className="sec-p">Direct relationships with certified suppliers across Europe, Asia-Pacific and the Middle East — sourcing materials where quality and value align.</p>
-          </div>
-          <div className="reg-grid">
-            {REGIONS.map((r,i)=>(<div key={r.region} className={`reg-card rv d${i+1}`}><div className="reg-name">{r.region}</div><div className="reg-c">{r.countries}</div></div>))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA — SAME STYLE AS HOME, using existing image */}
-      <div className="cta" style={{backgroundImage:"url('/images/last_hero_section1.jpeg')",backgroundSize:'cover',backgroundPosition:'center'}}>
+      {/* CTA (SAME AS HOME) */}
+      <div className="cta" style={{backgroundImage:"url('/images/orig.jpg')",backgroundSize:'cover',backgroundPosition:'center'}}>
         <div className="cta-overlay"/>
         <div className="cta-in rv">
           <div className="cta-tag">Start Today</div>
@@ -530,7 +625,7 @@ export default function ProcurementPage() {
         </div>
       </div>
 
-      {/* CONTACT — SAME STYLE AS HOME */}
+      {/* CONTACT */}
       <section className="cnt">
         <div className="wrap">
           <div className="rv"><div className="sec-tag">Get in Touch</div><h2 className="sec-h">Contact Us</h2><div className="sec-line"/><p className="sec-p">Reach out for procurement and supply chain enquiries. Our team responds within one business day.</p></div>
@@ -540,7 +635,7 @@ export default function ProcurementPage() {
         </div>
       </section>
 
-      {/* FOOTER — SAME STYLE AS HOME */}
+      {/* FOOTER (SAME AS HOME) */}
       <footer className="ftr">
         <div className="ftr-main">
           <div className="ftr-main-in">
