@@ -93,7 +93,7 @@ const CNTS = [
   { d:'M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zM2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z', l:'Website', v:'www.saifeliteqs.com' },
 ];
 
-const NAV = ['Home','Services','About','Process','Projects','Contact'];
+const NAV = ['Home','Services','About','Procurement','Projects','Contact'];
 const PHONE = '+97156465 5043';
 const WA_LINK = 'https://wa.me/971564655043';
 
