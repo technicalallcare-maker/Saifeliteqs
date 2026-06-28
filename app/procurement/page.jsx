@@ -629,6 +629,89 @@ export default function ProcurementPage() {
             </div>
           ))}
         </div>
+
+        {/* MATERIALS PAGE LINK BANNER */}
+        <div className="mat-cta-band rv" style={{marginTop:'4rem',background:'rgba(255,255,255,.06)',border:'1px solid rgba(184,145,42,.3)',padding:'2.5rem 3rem',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:'2rem'}}>
+          <div>
+            <div style={{fontSize:'.6rem',letterSpacing:'.28em',textTransform:'uppercase',color:'var(--gold-lt)',marginBottom:'.5rem'}}>Complete Catalogue</div>
+            <div style={{fontSize:'1.2rem',fontWeight:'700',color:'#fff',fontFamily:'Georgia,serif',marginBottom:'.4rem',lineHeight:1.2}}>Browse All 18 Material Categories</div>
+            <div style={{fontSize:'.82rem',color:'rgba(255,255,255,.55)',lineHeight:1.7}}>Steel, Tiles, Adhesives, Waterproofing, Electrical, Plumbing, Safety, Paints and more — with full product lists.</div>
+          </div>
+          <Link href="/materials" style={{display:'inline-flex',alignItems:'center',gap:'.6rem',background:'var(--gold)',color:'#fff',padding:'.9rem 2.2rem',fontSize:'.74rem',fontWeight:'700',letterSpacing:'.1em',textTransform:'uppercase',textDecoration:'none',whiteSpace:'nowrap',flexShrink:0,transition:'background .3s'}}>
+            View Full Material List &nbsp;<svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </Link>
+        </div>
+
+      </section>
+
+      {/* ===== SUPPLIER CATALOG SECTION ===== */}
+      <section style={{background:'var(--off-white, #f7f6f3)',padding:'7rem 1.5rem',borderTop:'1px solid var(--border, #e2ddd6)'}}>
+        <div style={{maxWidth:'1100px',margin:'0 auto'}}>
+          <div className="rv" style={{marginBottom:'3rem'}}>
+            <div style={{fontSize:'.6rem',fontWeight:600,letterSpacing:'.3em',textTransform:'uppercase',color:'var(--gold)',marginBottom:'.7rem'}}>Download</div>
+            <h2 style={{fontSize:'clamp(1.6rem,2.8vw,2.3rem)',fontWeight:700,color:'var(--navy)',fontFamily:'Georgia,serif',marginBottom:'.9rem',lineHeight:1.18}}>Aladeen Supplier Catalogue</h2>
+            <div style={{width:40,height:3,background:'var(--gold)',marginBottom:'1.2rem'}}/>
+            <p style={{color:'var(--txt2, #444)',fontSize:'.9rem',lineHeight:1.82,maxWidth:560}}>Browse our official supplier product catalogue from Aladeen Building Materials Trading FZE — covering hardware, tools, safety, chemicals, electrical, plumbing, cement, gypsum, paints and more.</p>
+          </div>
+          <div className="rv d2" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'2rem',alignItems:'center'}}>
+            {/* CATALOG PREVIEW */}
+            <div style={{background:'var(--navy)',padding:'3rem',textAlign:'center',position:'relative',overflow:'hidden'}}>
+              <div style={{position:'absolute',top:0,left:0,right:0,height:4,background:'linear-gradient(to right, var(--gold), var(--gold-lt)'}}/>
+              <div style={{width:70,height:90,background:'#cc0000',margin:'0 auto 1.5rem',display:'flex',alignItems:'center',justifyContent:'center',boxShadow:'0 8px 24px rgba(0,0,0,.4)'}}>
+                <svg width={32} height={32} viewBox="0 0 24 24" fill="white" opacity={0.9}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" strokeWidth={1.5}/><line x1="16" y1="13" x2="8" y2="13" stroke="white" strokeWidth={1.5}/><line x1="16" y1="17" x2="8" y2="17" stroke="white" strokeWidth={1.5}/><polyline points="10 9 9 9 8 9" fill="none" stroke="white" strokeWidth={1.5}/></svg>
+              </div>
+              <div style={{fontSize:'.56rem',letterSpacing:'.24em',textTransform:'uppercase',color:'rgba(255,255,255,.4)',marginBottom:'.4rem'}}>Aladeen BMT FZE</div>
+              <div style={{fontSize:'1rem',fontWeight:700,color:'#fff',marginBottom:'.25rem',letterSpacing:'.04em'}}>BUILDING MATERIALS</div>
+              <div style={{fontSize:'.7rem',color:'var(--gold-lt)',marginBottom:'1.5rem',letterSpacing:'.1em'}}>TRADING CATALOGUE 2023</div>
+              <div style={{fontSize:'.72rem',color:'rgba(255,255,255,.45)',lineHeight:1.6}}>17 Product Categories · 200+ Products<br/>Hardware · Safety · Chemicals · Electrical</div>
+            </div>
+
+            {/* CATALOG INFO + BUTTONS */}
+            <div>
+              <div style={{marginBottom:'1.5rem'}}>
+                {[
+                  {icon:'M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z', t:'17 Product Categories'},
+                  {icon:'M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2', t:'Hardware, Tools, Safety & PPE'},
+                  {icon:'M19.428 15.428a2 2 0 0 0-1.022-.547l-2.387-.477a6 6 0 0 0-3.86.517l-.318.158a6 6 0 0 1-3.86.517L6.05 15.21a2 2 0 0 0-1.806.547M8 4h8l-1 1v5.172a2 2 0 0 0 .586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.78 0-2.674-2.154-1.414-3.414l5-5A2 2 0 0 0 9 10.172V5L8 4z', t:'Construction Chemicals & Waterproofing'},
+                  {icon:'M13 10V3L4 14h7v7l9-11h-7z', t:'Electrical, Plumbing & Sanitaryware'},
+                  {icon:'M4 6h16M4 12h16M4 18h7', t:'Steel, Aluminium, Wood & Gypsum'},
+                ].map(row=>(
+                  <div key={row.t} style={{display:'flex',alignItems:'flex-start',gap:'.7rem',marginBottom:'1rem'}}>
+                    <div style={{width:32,height:32,flexShrink:0,border:'1px solid rgba(184,145,42,.3)',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--gold)'}}>
+                      <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><path d={row.icon}/></svg>
+                    </div>
+                    <div style={{fontSize:'.84rem',color:'var(--txt2)',lineHeight:1.5,paddingTop:'.3rem'}}>{row.t}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div style={{display:'flex',gap:'.8rem',flexWrap:'wrap'}}>
+                {/* VIEW BUTTON */}
+                <a
+                  href="/aladeen-catalog.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{display:'inline-flex',alignItems:'center',gap:'.5rem',background:'var(--gold)',color:'#fff',padding:'.82rem 1.8rem',fontSize:'.72rem',fontWeight:700,letterSpacing:'.1em',textTransform:'uppercase',textDecoration:'none',transition:'background .3s'}}
+                >
+                  <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>
+                  View Catalogue
+                </a>
+                {/* DOWNLOAD BUTTON */}
+                <a
+                  href="/aladeen-catalog.pdf"
+                  download="Aladeen-Building-Materials-Catalogue.pdf"
+                  style={{display:'inline-flex',alignItems:'center',gap:'.5rem',background:'transparent',color:'var(--navy)',padding:'.8rem 1.8rem',fontSize:'.72rem',fontWeight:700,letterSpacing:'.1em',textTransform:'uppercase',textDecoration:'none',border:'2px solid var(--navy)',transition:'all .3s'}}
+                >
+                  <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                  Download PDF
+                </a>
+              </div>
+              <div style={{marginTop:'1rem',fontSize:'.74rem',color:'var(--muted, #777)'}}>
+                Aladeen Building Materials Trading FZE · Ajman, UAE · aladeenbmt@gmail.com
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ===== UNIQUE TEMPLATE 5: GLOBAL NETWORK - MAP BG WITH PILLS ===== */}
