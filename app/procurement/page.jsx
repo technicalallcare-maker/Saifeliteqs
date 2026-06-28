@@ -491,17 +491,11 @@ export default function ProcurementPage() {
         <ul className="nlinks">
           {NAV.map(n=>(
             <li key={n}>
-              {n === 'Procurement' ? (
-                <a className="active">{n}</a>
-              ) : n === 'Home' ? (
-                <Link href="/">{n}</Link>
-              ) : (
-                <a onClick={()=>goHome(n.toLowerCase())}>{n}</a>
-              )}
+              <Link href={n === 'Home' ? '/' : `/${n.toLowerCase()}`} style={n==='Procurement'?{color:'var(--gold-lt)'}:{}}>{n}</Link>
             </li>
           ))}
         </ul>
-        <button className="nbtn" onClick={()=>goHome('contact')}>Contact Us</button>
+        <Link href="/contact" className="nbtn" style={{textDecoration:'none',display:'inline-flex',alignItems:'center'}}>Contact Us</Link>
         <button className="burger" onClick={()=>setMenu(true)}><Svg d="M3 12h18M3 6h18M3 18h18" s={24}/></button>
       </nav>
 
@@ -510,16 +504,10 @@ export default function ProcurementPage() {
         <button className="mob-x" onClick={()=>setMenu(false)}><Svg d="M18 6 6 18M6 6l12 12" s={26}/></button>
         {NAV.map(n=>(
           <div key={n}>
-            {n === 'Procurement' ? (
-              <a style={{color:'var(--gold-lt)'}}>{n}</a>
-            ) : n === 'Home' ? (
-              <Link href="/" onClick={()=>setMenu(false)}>{n}</Link>
-            ) : (
-              <a onClick={()=>goHome(n.toLowerCase())}>{n}</a>
-            )}
+            <Link href={n==='Home'?'/':`/${n.toLowerCase()}`} onClick={()=>setMenu(false)} style={n==='Procurement'?{color:'var(--gold-lt)'}:{}}>{n}</Link>
           </div>
         ))}
-        <button className="btn-gold" onClick={()=>goHome('contact')}>Contact Us</button>
+        <Link href="/contact" className="btn-gold" onClick={()=>setMenu(false)}>Contact Us</Link>
       </div>
 
       {/* HERO (SAME AS HOME) */}
@@ -533,7 +521,7 @@ export default function ProcurementPage() {
           <h1 className="hero-h"><span>Strategic Sourcing.</span><span>Delivered Globally.</span></h1>
           <p className="hero-sub">Building materials procurement and supply chain management across 18+ countries</p>
           <div className="hero-btns">
-            <button className="btn-gold" onClick={()=>goHome('contact')}>Request a Quote &nbsp;<Svg d="M5 12h14M12 5l7 7-7 7" s={14}/></button>
+            <button className="btn-gold" >Request a Quote &nbsp;<Svg d="M5 12h14M12 5l7 7-7 7" s={14}/></button>
             <a href="#offer" className="btn-white">What We Offer</a>
           </div>
         </div>
@@ -676,7 +664,7 @@ export default function ProcurementPage() {
           <h2 className="cta-h">Ready to Optimise Your Supply Chain?</h2>
           <p className="cta-p">Get in touch for a no-obligation procurement consultation. Our team will respond within one business day with a tailored solution.</p>
           <div className="cta-btns">
-            <button className="btn-gold" onClick={()=>goHome('contact')}>Request a Quote &nbsp;<Svg d="M5 12h14M12 5l7 7-7 7" s={14}/></button>
+            <button className="btn-gold" >Request a Quote &nbsp;<Svg d="M5 12h14M12 5l7 7-7 7" s={14}/></button>
             <a href={WA_LINK} target="_blank" rel="noreferrer" className="btn-white">WhatsApp Us</a>
           </div>
         </div>
@@ -724,10 +712,10 @@ export default function ProcurementPage() {
               <h4>Company</h4>
               <ul>
                 <li><Link href="/">Home</Link></li>
-                <li><a onClick={()=>goHome('services')}>Services</a></li>
-                <li><a onClick={()=>goHome('about')}>About Us</a></li>
-                <li><a onClick={()=>goHome('projects')}>Projects</a></li>
-                <li><a onClick={()=>goHome('contact')}>Contact</a></li>
+                <li><a >Services</a></li>
+                <li><a >About Us</a></li>
+                <li><a >Projects</a></li>
+                <li><a >Contact</a></li>
               </ul>
             </div>
           </div>
