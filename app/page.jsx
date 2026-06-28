@@ -546,15 +546,11 @@ export default function Page() {
         <ul className="nlinks">
           {NAV.map(n=>(
             <li key={n}>
-              {n === 'Procurement' ? (
-                <Link href="/procurement">{n}</Link>
-              ) : (
-                <a href={`#${n.toLowerCase()}`} onClick={e=>{e.preventDefault();go(n.toLowerCase());}}>{n}</a>
-              )}
+              <Link href={n === 'Home' ? '/' : `/${n.toLowerCase()}`}>{n}</Link>
             </li>
           ))}
         </ul>
-        <button className="nbtn" onClick={()=>go('contact')}>Contact Us</button>
+        <Link href="/contact" className="nbtn" style={{textDecoration:'none',display:'inline-flex',alignItems:'center'}}>Contact Us</Link>
         <button className="burger" onClick={()=>setMenu(true)}><Svg d="M3 12h18M3 6h18M3 18h18" s={24}/></button>
       </nav>
 
@@ -563,14 +559,10 @@ export default function Page() {
         <button className="mob-x" onClick={()=>setMenu(false)}><Svg d="M18 6 6 18M6 6l12 12" s={26}/></button>
         {NAV.map(n=>(
           <div key={n}>
-            {n === 'Procurement' ? (
-              <Link href="/procurement" onClick={()=>setMenu(false)}>{n}</Link>
-            ) : (
-              <a href="#" onClick={e=>{e.preventDefault();go(n.toLowerCase());}}>{n}</a>
-            )}
+            <Link href={n === 'Home' ? '/' : `/${n.toLowerCase()}`} onClick={()=>setMenu(false)}>{n}</Link>
           </div>
         ))}
-        <button className="btn-gold" onClick={()=>{go('contact');setMenu(false);}}>Contact Us</button>
+        <Link href="/contact" className="btn-gold" style={{textDecoration:'none'}} onClick={()=>setMenu(false)}>Contact Us</Link>
       </div>
 
       {/* Rest of the component remains the same... */}
