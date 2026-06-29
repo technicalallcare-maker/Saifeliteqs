@@ -87,8 +87,8 @@ const CNTS = [
 ];
 
 const NAV = ['Home','Services','About','Procurement','Projects','Contact'];
-const PHONE = '+97156465 5043';
-const WA_LINK = 'https://wa.me/971564655043';
+const PHONE = '+971 50 505 3679';
+const WA_LINK = 'https://wa.me/+971505053679';
 
 export default function ProcurementPage() {
   const [menu, setMenu] = useState(false);
