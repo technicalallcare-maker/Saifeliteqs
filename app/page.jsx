@@ -96,8 +96,8 @@ const CNTS = [
 
 // ✅ UPDATED: Added 'Procurement' to navigation
 const NAV = ['Home','Services','About','Procurement','Projects','Contact'];
-const PHONE = '+971505053679';
-const WA_LINK = 'https://wa.me/971505053679;
+const PHONE = '+97150505 3679';
+const WA_LINK = 'https://wa.me/971505053679';
 
 export default function Page() {
   const [sl, setSl] = useState(0);
