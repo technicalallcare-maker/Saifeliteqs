@@ -1,4 +1,5 @@
 import './globals.css';
+import ChatBot from '../components/ChatBot';
 
 export const metadata = {
   title: 'Saif Elite QS | Quantity Surveyor & Cost Consultant — Dubai, UAE',
@@ -12,7 +13,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <ChatBot />
+      </body>
     </html>
   );
 }
