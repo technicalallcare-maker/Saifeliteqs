@@ -17,12 +17,9 @@ GUIDELINES:
 - Keep responses brief (2-4 sentences max) unless detailed explanation is needed
 - Respond in the same language the user writes in (English or Arabic)`;
 
-// Try these free models in order until one works
+// Working free models on OpenRouter (tested)
 const MODELS = [
-  'deepseek/deepseek-chat-v3.1:free',
   'meta-llama/llama-3.3-70b-instruct:free',
-  'google/gemini-2.0-flash-exp:free',
-  'qwen/qwen-2.5-72b-instruct:free',
   'nousresearch/hermes-3-llama-3.1-405b:free',
 ];
 
@@ -67,12 +64,16 @@ async function callOpenRouter(apiKey, messages, model) {
   if (!res.ok) {
     const err = await res.text();
     console.error(`Model ${model} failed:`, err);
-    return null;
+    return { success: false, status: res.status };
   }
 
   const data = await res.json();
-  return data.choices?.[0]?.message?.content || null;
+  const reply = data.choices?.[0]?.message?.content;
+  return reply ? { success: true, reply } : { success: false };
 }
+
+// Sleep helper
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 export async function POST(request) {
   try {
@@ -90,19 +91,25 @@ export async function POST(request) {
     }
     messages.push({ role: 'user', content: message });
 
-    // Try each model until one works
+    // Try models with retry
     let aiReply = null;
-    let usedModel = null;
-    for (const model of MODELS) {
-      aiReply = await callOpenRouter(apiKey, messages, model);
-      if (aiReply) {
-        usedModel = model;
-        console.log(`Success with model: ${model}`);
-        break;
+    outer: for (let attempt = 0; attempt < 3; attempt++) {
+      for (const model of MODELS) {
+        const result = await callOpenRouter(apiKey, messages, model);
+        if (result.success) {
+          aiReply = result.reply;
+          break outer;
+        }
       }
+      // If all failed, wait 3 seconds and retry
+      if (attempt < 2) await sleep(3000);
     }
 
-    if (!aiReply) return Response.json({ error: 'All models failed' }, { status: 500 });
+    if (!aiReply) {
+      return Response.json({ 
+        reply: "I'm experiencing high demand right now. Please try again in a moment, or contact us directly at info@saifeliteqs.com or +971 50 505 3679. We respond within one business day."
+      });
+    }
 
     // Save chat history
     const existing = await redisGet(`chat:${sessionId}`) || [];
