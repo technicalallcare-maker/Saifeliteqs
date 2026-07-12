@@ -70,7 +70,7 @@ export async function POST(request) {
         'X-Title': 'Saif Elite QS Chatbot',
       },
       body: JSON.stringify({
-        model: 'google/gemma-3-4b-it:free',
+        model: 'nvidia/llama-3.1-nemotron-ultra-253b-v1:free',
         messages,
         max_tokens: 500,
         temperature: 0.7,
