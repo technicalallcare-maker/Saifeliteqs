@@ -39,28 +39,52 @@ async function redisGet(key) {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await res.json();
-    return data.result ? JSON.parse(data.result) : null;
-  } catch (e) { console.error('Redis get error:', e); return null; }
+    if (!data || !data.result) return null;
+    try {
+      const parsed = JSON.parse(data.result);
+      return parsed;
+    } catch {
+      return null;
+    }
+  } catch (e) { 
+    console.error('Redis get error:', e); 
+    return null; 
+  }
 }
 
 export async function POST(request) {
   try {
-    const { message, sessionId, history } = await request.json();
-    if (!message || !sessionId) return Response.json({ error: 'Missing fields' }, { status: 400 });
+    const body = await request.json();
+    const message = body?.message;
+    const sessionId = body?.sessionId;
+    const history = body?.history;
+    
+    if (!message || !sessionId) {
+      return Response.json({ error: 'Missing fields' }, { status: 400 });
+    }
 
     const apiKey = process.env.GROQ_API_KEY;
-    if (!apiKey) return Response.json({ error: 'API key not configured' }, { status: 500 });
-
-    // Build messages array
-    const messages = [{ role: 'system', content: SYSTEM_PROMPT }];
-    if (history && Array.isArray(history) && history.length > 0) {
-      history.slice(-10).forEach(msg => {
-        if (msg && msg.role && msg.content) {
-          messages.push({ role: msg.role === 'user' ? 'user' : 'assistant', content: msg.content });
-        }
-      });
+    if (!apiKey) {
+      return Response.json({ error: 'API key not configured' }, { status: 500 });
     }
-    messages.push({ role: 'user', content: message });
+
+    // Build messages array safely
+    const messages = [{ role: 'system', content: SYSTEM_PROMPT }];
+    
+    if (Array.isArray(history)) {
+      const recentHistory = history.slice(-10);
+      for (let i = 0; i < recentHistory.length; i++) {
+        const msg = recentHistory[i];
+        if (msg && typeof msg === 'object' && msg.role && msg.content) {
+          messages.push({
+            role: msg.role === 'user' ? 'user' : 'assistant',
+            content: String(msg.content)
+          });
+        }
+      }
+    }
+    
+    messages.push({ role: 'user', content: String(message) });
 
     // Call Groq API
     const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -71,40 +95,55 @@ export async function POST(request) {
       },
       body: JSON.stringify({
         model: 'llama-3.3-70b-versatile',
-        messages,
+        messages: messages,
         max_tokens: 500,
         temperature: 0.7,
       })
     });
 
     if (!res.ok) {
-      const err = await res.text();
-      console.error('Groq error:', err);
-      return Response.json({ error: 'AI error' }, { status: 500 });
+      const errText = await res.text();
+      console.error('Groq API error:', errText);
+      return Response.json({ error: 'AI service error' }, { status: 500 });
     }
 
     const data = await res.json();
-    const aiReply = data.choices?.[0]?.message?.content;
-    if (!aiReply) return Response.json({ error: 'No AI response' }, { status: 500 });
+    const aiReply = data?.choices?.[0]?.message?.content;
+    
+    if (!aiReply) {
+      return Response.json({ error: 'No AI response' }, { status: 500 });
+    }
 
-    // Save chat history to Redis
-    const existing = await redisGet(`chat:${sessionId}`) || [];
-    await redisSet(`chat:${sessionId}`, [
-      ...existing,
-      { role: 'user', content: message, timestamp: new Date().toISOString() },
-      { role: 'assistant', content: aiReply, timestamp: new Date().toISOString() }
-    ]);
+    // Save chat history to Redis (with safe fallback)
+    try {
+      const existingRaw = await redisGet(`chat:${sessionId}`);
+      const existing = Array.isArray(existingRaw) ? existingRaw : [];
+      const newHistory = [
+        ...existing,
+        { role: 'user', content: message, timestamp: new Date().toISOString() },
+        { role: 'assistant', content: aiReply, timestamp: new Date().toISOString() }
+      ];
+      await redisSet(`chat:${sessionId}`, newHistory);
 
-    // Save session index
-    const sessions = await redisGet('sessions:index') || [];
-    if (!sessions.find(s => s.id === sessionId)) {
-      sessions.unshift({ id: sessionId, startedAt: new Date().toISOString(), firstMessage: message.slice(0, 60) });
-      await redisSet('sessions:index', sessions.slice(0, 500));
+      const sessionsRaw = await redisGet('sessions:index');
+      const sessions = Array.isArray(sessionsRaw) ? sessionsRaw : [];
+      const exists = sessions.some(s => s && s.id === sessionId);
+      if (!exists) {
+        sessions.unshift({
+          id: sessionId,
+          startedAt: new Date().toISOString(),
+          firstMessage: String(message).slice(0, 60)
+        });
+        await redisSet('sessions:index', sessions.slice(0, 500));
+      }
+    } catch (redisErr) {
+      console.error('Redis save failed (non-critical):', redisErr);
     }
 
     return Response.json({ reply: aiReply });
+    
   } catch (error) {
     console.error('Chat error:', error);
-    return Response.json({ error: 'Server error' }, { status: 500 });
+    return Response.json({ error: 'Server error', details: error.message }, { status: 500 });
   }
 }
