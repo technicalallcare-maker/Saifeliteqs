@@ -48,41 +48,46 @@ export async function POST(request) {
     const { message, sessionId, history } = await request.json();
     if (!message || !sessionId) return Response.json({ error: 'Missing fields' }, { status: 400 });
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.OPENROUTER_API_KEY;
     if (!apiKey) return Response.json({ error: 'API key not configured' }, { status: 500 });
 
-    const contents = [];
+    // Build messages array
+    const messages = [{ role: 'system', content: SYSTEM_PROMPT }];
     if (history && history.length > 0) {
       history.slice(-10).forEach(msg => {
-        contents.push({ role: msg.role === 'user' ? 'user' : 'model', parts: [{ text: msg.content }] });
+        messages.push({ role: msg.role === 'user' ? 'user' : 'assistant', content: msg.content });
       });
     }
-    contents.push({ role: 'user', parts: [{ text: message }] });
+    messages.push({ role: 'user', content: message });
 
-    const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-8b-001:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents,
-          generationConfig: { temperature: 0.7, maxOutputTokens: 500 }
-        })
-      }
-    );
+    // Call OpenRouter API (free model)
+    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://www.saifeliteqs.com',
+        'X-Title': 'Saif Elite QS Chatbot',
+      },
+      body: JSON.stringify({
+        model: 'meta-llama/llama-3.2-3b-instruct:free',
+        messages,
+        max_tokens: 500,
+        temperature: 0.7,
+      })
+    });
 
-    if (!geminiRes.ok) {
-      const err = await geminiRes.text();
-      console.error('Gemini error:', err);
+    if (!res.ok) {
+      const err = await res.text();
+      console.error('OpenRouter error:', err);
       return Response.json({ error: 'AI error' }, { status: 500 });
     }
 
-    const geminiData = await geminiRes.json();
-    const aiReply = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
+    const data = await res.json();
+    const aiReply = data.choices?.[0]?.message?.content;
     if (!aiReply) return Response.json({ error: 'No AI response' }, { status: 500 });
 
-    // Save chat history
+    // Save chat history to Redis
     const existing = await redisGet(`chat:${sessionId}`) || [];
     await redisSet(`chat:${sessionId}`, [
       ...existing,
