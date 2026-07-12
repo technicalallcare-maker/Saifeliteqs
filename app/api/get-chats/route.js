@@ -1,50 +1,34 @@
-import { kv } from '@vercel/kv';
-
-// Simple password protection - change this password!
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'saifqs2025';
+
+async function redisGet(key) {
+  try {
+    const url = process.env.KV_REST_API_URL;
+    const token = process.env.KV_REST_API_TOKEN;
+    if (!url || !token) return null;
+    const res = await fetch(`${url}/get/${encodeURIComponent(key)}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await res.json();
+    return data.result ? JSON.parse(data.result) : null;
+  } catch (e) { return null; }
+}
 
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const password = searchParams.get('password');
-    const sessionId = searchParams.get('sessionId');
+    if (password !== ADMIN_PASSWORD) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
-    // Password check
-    if (password !== ADMIN_PASSWORD) {
-      return Response.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    // Get specific session
-    if (sessionId) {
-      const chatKey = `chat:${sessionId}`;
-      const messages = await kv.get(chatKey) || [];
-      return Response.json({ sessionId, messages });
-    }
-
-    // Get all sessions index
-    const sessions = await kv.get('sessions:index') || [];
-    
-    // Get full chat for each session (limit to 50 most recent)
-    const recentSessions = sessions.slice(0, 50);
-    const fullChats = await Promise.all(
-      recentSessions.map(async (session) => {
-        const messages = await kv.get(`chat:${session.id}`) || [];
-        return {
-          ...session,
-          messageCount: messages.length,
-          messages,
-          lastMessage: messages[messages.length - 1]?.timestamp || session.startedAt
-        };
+    const sessions = await redisGet('sessions:index') || [];
+    const chats = await Promise.all(
+      sessions.slice(0, 50).map(async (session) => {
+        const messages = await redisGet(`chat:${session.id}`) || [];
+        return { ...session, messageCount: messages.length, messages };
       })
     );
 
-    return Response.json({
-      total: sessions.length,
-      chats: fullChats
-    });
-
+    return Response.json({ total: sessions.length, chats });
   } catch (error) {
-    console.error('Get chats error:', error);
-    return Response.json({ error: 'Internal server error' }, { status: 500 });
+    return Response.json({ error: 'Server error' }, { status: 500 });
   }
 }
