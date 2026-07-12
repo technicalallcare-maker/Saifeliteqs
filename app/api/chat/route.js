@@ -17,12 +17,6 @@ GUIDELINES:
 - Keep responses brief (2-4 sentences max) unless detailed explanation is needed
 - Respond in the same language the user writes in (English or Arabic)`;
 
-// Working free models on OpenRouter (tested)
-const MODELS = [
-  'meta-llama/llama-3.3-70b-instruct:free',
-  'nousresearch/hermes-3-llama-3.1-405b:free',
-];
-
 async function redisSet(key, value) {
   try {
     const url = process.env.KV_REST_API_URL;
@@ -49,40 +43,15 @@ async function redisGet(key) {
   } catch (e) { console.error('Redis get error:', e); return null; }
 }
 
-async function callOpenRouter(apiKey, messages, model) {
-  const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-      'HTTP-Referer': 'https://www.saifeliteqs.com',
-      'X-Title': 'Saif Elite QS Chatbot',
-    },
-    body: JSON.stringify({ model, messages, max_tokens: 500, temperature: 0.7 })
-  });
-
-  if (!res.ok) {
-    const err = await res.text();
-    console.error(`Model ${model} failed:`, err);
-    return { success: false, status: res.status };
-  }
-
-  const data = await res.json();
-  const reply = data.choices?.[0]?.message?.content;
-  return reply ? { success: true, reply } : { success: false };
-}
-
-// Sleep helper
-const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-
 export async function POST(request) {
   try {
     const { message, sessionId, history } = await request.json();
     if (!message || !sessionId) return Response.json({ error: 'Missing fields' }, { status: 400 });
 
-    const apiKey = process.env.OPENROUTER_API_KEY;
+    const apiKey = process.env.GROQ_API_KEY;
     if (!apiKey) return Response.json({ error: 'API key not configured' }, { status: 500 });
 
+    // Build messages array
     const messages = [{ role: 'system', content: SYSTEM_PROMPT }];
     if (history && history.length > 0) {
       history.slice(-10).forEach(msg => {
@@ -91,27 +60,32 @@ export async function POST(request) {
     }
     messages.push({ role: 'user', content: message });
 
-    // Try models with retry
-    let aiReply = null;
-    outer: for (let attempt = 0; attempt < 3; attempt++) {
-      for (const model of MODELS) {
-        const result = await callOpenRouter(apiKey, messages, model);
-        if (result.success) {
-          aiReply = result.reply;
-          break outer;
-        }
-      }
-      // If all failed, wait 3 seconds and retry
-      if (attempt < 2) await sleep(3000);
+    // Call Groq API
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages,
+        max_tokens: 500,
+        temperature: 0.7,
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.text();
+      console.error('Groq error:', err);
+      return Response.json({ error: 'AI error' }, { status: 500 });
     }
 
-    if (!aiReply) {
-      return Response.json({ 
-        reply: "I'm experiencing high demand right now. Please try again in a moment, or contact us directly at info@saifeliteqs.com or +971 50 505 3679. We respond within one business day."
-      });
-    }
+    const data = await res.json();
+    const aiReply = data.choices?.[0]?.message?.content;
+    if (!aiReply) return Response.json({ error: 'No AI response' }, { status: 500 });
 
-    // Save chat history
+    // Save chat history to Redis
     const existing = await redisGet(`chat:${sessionId}`) || [];
     await redisSet(`chat:${sessionId}`, [
       ...existing,
@@ -119,6 +93,7 @@ export async function POST(request) {
       { role: 'assistant', content: aiReply, timestamp: new Date().toISOString() }
     ]);
 
+    // Save session index
     const sessions = await redisGet('sessions:index') || [];
     if (!sessions.find(s => s.id === sessionId)) {
       sessions.unshift({ id: sessionId, startedAt: new Date().toISOString(), firstMessage: message.slice(0, 60) });
