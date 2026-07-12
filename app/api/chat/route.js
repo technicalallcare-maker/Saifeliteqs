@@ -17,6 +17,15 @@ GUIDELINES:
 - Keep responses brief (2-4 sentences max) unless detailed explanation is needed
 - Respond in the same language the user writes in (English or Arabic)`;
 
+// Try these free models in order until one works
+const MODELS = [
+  'deepseek/deepseek-chat-v3.1:free',
+  'meta-llama/llama-3.3-70b-instruct:free',
+  'google/gemini-2.0-flash-exp:free',
+  'qwen/qwen-2.5-72b-instruct:free',
+  'nousresearch/hermes-3-llama-3.1-405b:free',
+];
+
 async function redisSet(key, value) {
   try {
     const url = process.env.KV_REST_API_URL;
@@ -43,6 +52,28 @@ async function redisGet(key) {
   } catch (e) { console.error('Redis get error:', e); return null; }
 }
 
+async function callOpenRouter(apiKey, messages, model) {
+  const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+      'HTTP-Referer': 'https://www.saifeliteqs.com',
+      'X-Title': 'Saif Elite QS Chatbot',
+    },
+    body: JSON.stringify({ model, messages, max_tokens: 500, temperature: 0.7 })
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    console.error(`Model ${model} failed:`, err);
+    return null;
+  }
+
+  const data = await res.json();
+  return data.choices?.[0]?.message?.content || null;
+}
+
 export async function POST(request) {
   try {
     const { message, sessionId, history } = await request.json();
@@ -51,7 +82,6 @@ export async function POST(request) {
     const apiKey = process.env.OPENROUTER_API_KEY;
     if (!apiKey) return Response.json({ error: 'API key not configured' }, { status: 500 });
 
-    // Build messages array
     const messages = [{ role: 'system', content: SYSTEM_PROMPT }];
     if (history && history.length > 0) {
       history.slice(-10).forEach(msg => {
@@ -60,34 +90,21 @@ export async function POST(request) {
     }
     messages.push({ role: 'user', content: message });
 
-    // Call OpenRouter API (free model)
-    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://www.saifeliteqs.com',
-        'X-Title': 'Saif Elite QS Chatbot',
-      },
-      body: JSON.stringify({
-        model: 'nvidia/llama-3.1-nemotron-ultra-253b-v1:free',
-        messages,
-        max_tokens: 500,
-        temperature: 0.7,
-      })
-    });
-
-    if (!res.ok) {
-      const err = await res.text();
-      console.error('OpenRouter error:', err);
-      return Response.json({ error: 'AI error' }, { status: 500 });
+    // Try each model until one works
+    let aiReply = null;
+    let usedModel = null;
+    for (const model of MODELS) {
+      aiReply = await callOpenRouter(apiKey, messages, model);
+      if (aiReply) {
+        usedModel = model;
+        console.log(`Success with model: ${model}`);
+        break;
+      }
     }
 
-    const data = await res.json();
-    const aiReply = data.choices?.[0]?.message?.content;
-    if (!aiReply) return Response.json({ error: 'No AI response' }, { status: 500 });
+    if (!aiReply) return Response.json({ error: 'All models failed' }, { status: 500 });
 
-    // Save chat history to Redis
+    // Save chat history
     const existing = await redisGet(`chat:${sessionId}`) || [];
     await redisSet(`chat:${sessionId}`, [
       ...existing,
@@ -95,7 +112,6 @@ export async function POST(request) {
       { role: 'assistant', content: aiReply, timestamp: new Date().toISOString() }
     ]);
 
-    // Save session index
     const sessions = await redisGet('sessions:index') || [];
     if (!sessions.find(s => s.id === sessionId)) {
       sessions.unshift({ id: sessionId, startedAt: new Date().toISOString(), firstMessage: message.slice(0, 60) });
