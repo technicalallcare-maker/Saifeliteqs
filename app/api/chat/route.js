@@ -53,9 +53,11 @@ export async function POST(request) {
 
     // Build messages array
     const messages = [{ role: 'system', content: SYSTEM_PROMPT }];
-    if (history && history.length > 0) {
+    if (history && Array.isArray(history) && history.length > 0) {
       history.slice(-10).forEach(msg => {
-        messages.push({ role: msg.role === 'user' ? 'user' : 'assistant', content: msg.content });
+        if (msg && msg.role && msg.content) {
+          messages.push({ role: msg.role === 'user' ? 'user' : 'assistant', content: msg.content });
+        }
       });
     }
     messages.push({ role: 'user', content: message });
