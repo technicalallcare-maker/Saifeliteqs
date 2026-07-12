@@ -70,7 +70,7 @@ export async function POST(request) {
         'X-Title': 'Saif Elite QS Chatbot',
       },
       body: JSON.stringify({
-        model: 'mistralai/mistral-7b-instruct:free',
+        model: 'google/gemma-3-4b-it:free',
         messages,
         max_tokens: 500,
         temperature: 0.7,
