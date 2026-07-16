@@ -233,7 +233,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* Schema.org JSON-LD */}
         <Script
           id="schema-org"
           type="application/ld+json"
@@ -241,7 +240,6 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
 
-        {/* Meta Pixel */}
         <Script
           id="meta-pixel"
           strategy="afterInteractive"
@@ -255,26 +253,27 @@ export default function RootLayout({ children }) {
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window, document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '1762675368485996');
+              fbq('init', '1506882897281487');
               fbq('track', 'PageView');
             `,
           }}
         />
+
         <noscript>
           <img
             height="1"
             width="1"
             style={{ display: 'none' }}
-            src="https://www.facebook.com/tr?id=1762675368485996&ev=PageView&noscript=1"
+            src="https://www.facebook.com/tr?id=1506882897281487&ev=PageView&noscript=1"
             alt=""
           />
         </noscript>
 
-        {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://connect.facebook.net" />
         <link rel="dns-prefetch" href="https://www.facebook.com" />
       </head>
+
       <body>
         {children}
         <ChatBot />
