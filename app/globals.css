@@ -1,27 +1,347 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* ═══════════════════════════════════════════════════════════════
+   GLOBAL STYLES — Mobile Fixes for Saif Elite QS
+   ═══════════════════════════════════════════════════════════════ */
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+/* ─── FIX 1: HORIZONTAL SCROLL / SHAKING ─── */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: relative;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+/* Prevent any element from causing horizontal overflow */
+* {
+  max-width: 100%;
+}
+
+/* Fix images that cause overflow */
+img, video, iframe {
+  max-width: 100% !important;
+  height: auto;
+}
+
+/* Prevent sections from overflowing */
+section, header, footer, div, main, article, aside {
+  max-width: 100vw;
+}
+
+/* ─── FIX 2: MOBILE NAV — LOGO + BUTTON ─── */
+@media (max-width: 768px) {
+  
+  /* NAV container — better spacing */
+  .nav {
+    padding: 0 1rem !important;
+    height: 68px !important;
+    gap: 0.5rem;
+  }
+  .nav.sc {
+    height: 60px !important;
+  }
+  
+  /* Logo — smaller on mobile */
+  .nlogo {
+    gap: 0.5rem !important;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .nlogo img {
+    width: 45px !important;
+    height: 45px !important;
+    flex-shrink: 0;
+  }
+  .nlogo-txt {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .nlogo-txt b {
+    font-size: 0.7rem !important;
+    letter-spacing: 0.03em !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .nlogo-txt span {
+    font-size: 0.48rem !important;
+    letter-spacing: 0.12em !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* Burger — visible & sized properly */
+  .burger {
+    display: flex !important;
+    background: transparent;
+    border: 1px solid rgba(184,145,42,0.4) !important;
+    color: #d4aa40 !important;
+    padding: 8px !important;
+    border-radius: 4px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* ─── FIX 3: MOBILE MENU IMPROVEMENTS ─── */
+  .mob {
+    display: none;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 9998 !important;
+    background: linear-gradient(135deg, #0e1118 0%, #1a1f2e 100%) !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 1.5rem !important;
+    padding: 5rem 2rem 3rem !important;
+    overflow-y: auto;
+  }
+  .mob.on {
+    display: flex !important;
+  }
+  
+  /* Close button — bigger & more visible */
+  .mob-x {
+    position: absolute !important;
+    top: 1rem !important;
+    right: 1rem !important;
+    background: rgba(184,145,42,0.15) !important;
+    border: 1px solid rgba(184,145,42,0.4) !important;
+    color: #d4aa40 !important;
+    cursor: pointer;
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 10;
+  }
+  .mob-x:hover, .mob-x:active {
+    background: #d4aa40 !important;
+    color: #fff !important;
+  }
+  
+  /* Mobile menu logo at top */
+  .mob::before {
+    content: '';
+    position: absolute;
+    top: 1.4rem;
+    left: 1.4rem;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, #b8912a, transparent);
+  }
+  
+  /* Menu links */
+  .mob a {
+    color: #fff !important;
+    text-decoration: none !important;
+    font-size: 1.15rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    padding: 0.7rem 1.5rem !important;
+    border-radius: 4px;
+    transition: all 0.3s ease !important;
+    position: relative;
+    display: inline-block;
+  }
+  .mob a:hover, .mob a:active {
+    color: #d4aa40 !important;
+    background: rgba(184,145,42,0.08);
+  }
+  .mob a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 1px;
+    background: #d4aa40;
+    transition: width 0.3s ease;
+  }
+  .mob a:hover::before {
+    width: 15px;
+  }
+  
+  /* Contact Us button in mobile menu */
+  .mob .btn-gold, .mob .nbtn {
+    background: linear-gradient(135deg, #b8912a, #d4aa40) !important;
+    color: #fff !important;
+    padding: 0.9rem 2.5rem !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase !important;
+    border-radius: 4px !important;
+    margin-top: 1rem;
+    box-shadow: 0 4px 20px rgba(184,145,42,0.3);
+    text-decoration: none !important;
+  }
+  
+  /* Hide "Contact Us" button in top nav on mobile */
+  .nav > .nbtn, .nav > a.nbtn {
+    display: none !important;
+  }
+  
+  /* ─── FIX 4: TEXT SIZE FOR MOBILE READABILITY ─── */
+  
+  /* Body base */
+  body {
+    font-size: 15px !important;
+    line-height: 1.65 !important;
+  }
+  
+  /* Section paragraphs */
+  .sec-p, section p, .page-hero-p, .abt-txt p {
+    font-size: 0.95rem !important;
+    line-height: 1.75 !important;
+  }
+  
+  /* Service descriptions */
+  .svc-d, .val-d, .pstep-d, .prj-stone-desc, .cat-desc, .office-detail, .item-row, .mat-card-d {
+    font-size: 0.86rem !important;
+    line-height: 1.7 !important;
+  }
+  
+  /* Service/card titles */
+  .svc-t, .val-t, .pstep-t, .prj-stone-name, .cat-title, .office-loc, .mat-card-t {
+    font-size: 1rem !important;
+    line-height: 1.35 !important;
+  }
+  
+  /* Section headings */
+  .sec-h {
+    font-size: 1.6rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  /* Hero headings */
+  .hero-h {
+    font-size: 2.2rem !important;
+    line-height: 1.1 !important;
+  }
+  .hero-sub {
+    font-size: 0.95rem !important;
+    line-height: 1.75 !important;
+  }
+  .hero-tag {
+    font-size: 0.65rem !important;
+  }
+  
+  /* Page hero */
+  .page-hero {
+    padding: 6.5rem 1.2rem 3.5rem !important;
+  }
+  .page-hero h1 {
+    font-size: 2rem !important;
+    line-height: 1.15 !important;
+  }
+  
+  /* Why list */
+  .why-t {
+    font-size: 0.9rem !important;
+    line-height: 1.6 !important;
+  }
+  
+  /* Stats */
+  .stat-v {
+    font-size: 1.8rem !important;
+  }
+  .stat-l {
+    font-size: 0.6rem !important;
+  }
+  
+  /* Contact section */
+  .cnt-val {
+    font-size: 0.92rem !important;
+  }
+  .cnt-lbl {
+    font-size: 0.6rem !important;
+  }
+  
+  /* Buttons — better tap targets */
+  .btn-gold, .btn-white, .btn-ol-gold, .btn-ol-dark {
+    padding: 0.9rem 1.6rem !important;
+    font-size: 0.72rem !important;
+  }
+  
+  /* Section padding */
+  section {
+    padding: 4rem 1.2rem !important;
+  }
+  
+  /* ─── FIX 5: WHATSAPP + CALL BUTTONS POSITION (avoid chatbot) ─── */
+  .mob-call {
+    left: 1rem !important;
+    bottom: 1.4rem !important;
+    z-index: 500 !important;
+  }
+  .mob-wa {
+    right: 1rem !important;
+    bottom: 6rem !important;  /* Higher up — above chatbot */
+    z-index: 500 !important;
+  }
+  
+  /* ─── FOOTER FIXES ─── */
+  .ftr-main {
+    padding: 3.5rem 1.2rem 2rem !important;
+  }
+  .ftr-brand-p {
+    font-size: 0.86rem !important;
+  }
+  .fcol a {
+    font-size: 0.86rem !important;
+  }
+  
+  /* ─── SVG icons don't cause overflow ─── */
+  svg {
+    max-width: 100%;
+    flex-shrink: 0;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+/* ─── EXTRA SMALL PHONES ─── */
+@media (max-width: 480px) {
+  .nlogo img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .nlogo-txt b {
+    font-size: 0.66rem !important;
+  }
+  .nlogo-txt span {
+    font-size: 0.44rem !important;
+  }
+  .hero-h {
+    font-size: 1.9rem !important;
+  }
+  .page-hero h1 {
+    font-size: 1.8rem !important;
+  }
+  .sec-h {
+    font-size: 1.4rem !important;
+  }
+  .mob a {
+    font-size: 1.05rem !important;
+  }
+}
+
+/* ─── CHATBOT POSITION FIX ─── */
+@media (max-width: 768px) {
+  .cb-wrap {
+    right: 1rem !important;
+    bottom: 1.4rem !important;
+  }
+  .cb-window {
+    width: calc(100vw - 2rem) !important;
+    right: -0.2rem !important;
+    height: 75vh !important;
+    max-height: 550px !important;
+  }
 }
