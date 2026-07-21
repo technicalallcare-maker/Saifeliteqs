@@ -1,5 +1,6 @@
 import './globals.css';
 import ChatBot from '../components/ChatBot';
+import Tracker from '../components/Tracker';
 import Script from 'next/script';
 
 export const metadata = {
@@ -276,6 +277,7 @@ export default function RootLayout({ children }) {
 
       <body>
         {children}
+        <Tracker />
         <ChatBot />
       </body>
     </html>
