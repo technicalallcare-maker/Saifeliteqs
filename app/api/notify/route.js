@@ -18,7 +18,7 @@ export async function POST(request) {
     }
 
     const toEmail = 'info@saifeliteqs.com';
-    const fromEmail = 'onboarding@resend.dev'; // Change to noreply@saifeliteqs.com after domain verification
+    const fromEmail = 'noreply@saifeliteqs.com';
 
     let subject = '';
     let htmlBody = '';
