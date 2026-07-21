@@ -34,14 +34,53 @@ export default function ChatBot() {
   });
   const [showBubble, setShowBubble] = useState(false);
   const [unread, setUnread] = useState(0);
+  const [notified, setNotified] = useState(false); // track if new_chat email sent
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+
+  // Send email notification (fire-and-forget)
+  const sendNotification = async (type, msgs) => {
+    try {
+      await fetch('/api/notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type,
+          sessionId,
+          messages: msgs.filter(m => m.id !== 'welcome').map(m => ({ role: m.role, content: m.content })),
+          userInfo: { page: typeof window !== 'undefined' ? window.location.href : '' },
+        }),
+      });
+    } catch (e) {
+      console.error('Notification failed:', e);
+    }
+  };
 
   // Show attention bubble after 8 seconds
   useEffect(() => {
     const t = setTimeout(() => setShowBubble(true), 8000);
     return () => clearTimeout(t);
   }, []);
+
+  // Send chat_end email when user leaves the page (only if conversation happened)
+  useEffect(() => {
+    const handleEnd = () => {
+      if (!notified) return; // no chat happened, skip
+      const msgs = messages.filter(m => m.id !== 'welcome');
+      if (msgs.length < 2) return; // need at least 1 exchange
+      const payload = JSON.stringify({
+        type: 'chat_end',
+        sessionId,
+        messages: msgs.map(m => ({ role: m.role, content: m.content })),
+        userInfo: { page: window.location.href },
+      });
+      // Use sendBeacon for reliable delivery on page unload
+      navigator.sendBeacon('/api/notify', payload);
+    };
+
+    window.addEventListener('beforeunload', handleEnd);
+    return () => window.removeEventListener('beforeunload', handleEnd);
+  }, [messages, notified, sessionId]);
 
   useEffect(() => {
     if (open) {
@@ -78,11 +117,16 @@ export default function ChatBot() {
       const data = await res.json();
 
       if (data.reply) {
-        setMessages(prev => [...prev, {
-          role: 'assistant',
-          content: data.reply,
-          id: Date.now().toString()
-        }]);
+        const botMsg = { role: 'assistant', content: data.reply, id: Date.now().toString() };
+        setMessages(prev => {
+          const updated = [...prev, botMsg];
+          // Send new_chat email on first user message only
+          if (!notified) {
+            setNotified(true);
+            sendNotification('new_chat', [userMsg, botMsg]);
+          }
+          return updated;
+        });
         if (!open) setUnread(prev => prev + 1);
       } else {
         throw new Error('No reply');
