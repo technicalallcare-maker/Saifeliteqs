@@ -108,7 +108,36 @@ export default function Page() {
   const [graphVisible, setGraphVisible] = useState(false);
   const [animPct, setAnimPct] = useState(GRAPH_STATS.map(() => 0));
   const [form, setForm] = useState({ fn:'', ln:'', email:'', svc:'', msg:'' });
+  const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [formError, setFormError] = useState('');
   const timer = useRef(null);
+
+  const handleSubmit = async () => {
+    if (!form.fn || !form.email || !form.msg) {
+      setFormError('Please fill Name, Email and Project Details');
+      return;
+    }
+    setFormError('');
+    setSending(true);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setSent(true);
+      } else {
+        setFormError(data.error || 'Something went wrong. Please try again.');
+      }
+    } catch (e) {
+      setFormError('Network error. Please try again.');
+    } finally {
+      setSending(false);
+    }
+  };
   const graphRef = useRef(null);
 
   useEffect(() => {
@@ -893,19 +922,32 @@ export default function Page() {
               <div className="cnt-note"><p><strong style={{color:'var(--gold)'}}>Response Guarantee —</strong> We respond to every enquiry within one business day. For urgent requirements please call us directly.</p></div>
             </div>
             <div className="rv rr d2">
+              {sent ? (
+                <div style={{textAlign:'center',padding:'3rem 1.5rem'}}>
+                  <Svg d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3" s={40} w={1.5}/>
+                  <h3 style={{marginTop:'1rem',color:'var(--navy)'}}>Enquiry Sent Successfully</h3>
+                  <p style={{color:'var(--muted)',marginTop:'.5rem'}}>Thank you for getting in touch. A senior consultant will respond within one business day.</p>
+                </div>
+              ) : (
+                <>
               <div className="frow">
-                <div className="fg"><label>First Name</label><input type="text" placeholder="John" value={form.fn} onChange={e=>setForm({...form,fn:e.target.value})}/></div>
+                <div className="fg"><label>First Name *</label><input type="text" placeholder="John" value={form.fn} onChange={e=>setForm({...form,fn:e.target.value})}/></div>
                 <div className="fg"><label>Last Name</label><input type="text" placeholder="Smith" value={form.ln} onChange={e=>setForm({...form,ln:e.target.value})}/></div>
               </div>
-              <div className="fg"><label>Email</label><input type="email" placeholder="john@company.com" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></div>
+              <div className="fg"><label>Email *</label><input type="email" placeholder="john@company.com" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></div>
               <div className="fg"><label>Service Required</label>
                 <select value={form.svc} onChange={e=>setForm({...form,svc:e.target.value})}>
                   <option value="">Select a service...</option>
                   {SVCS.map(s=><option key={s.n}>{s.t}</option>)}
                 </select>
               </div>
-              <div className="fg"><label>Project Details</label><textarea rows={5} placeholder="Tell us about your project — type, location, value and programme..." value={form.msg} onChange={e=>setForm({...form,msg:e.target.value})}/></div>
-              <button className="btn-gold btn-full">Send Enquiry &nbsp;<Svg d="M22 2 11 13M22 2 15 22 11 13 2 9l20-7z" s={14}/></button>
+              <div className="fg"><label>Project Details *</label><textarea rows={5} placeholder="Tell us about your project — type, location, value and programme..." value={form.msg} onChange={e=>setForm({...form,msg:e.target.value})}/></div>
+              {formError && <p style={{color:'#e53e3e',fontSize:'.85rem',marginBottom:'.8rem'}}>{formError}</p>}
+              <button className="btn-gold btn-full" onClick={handleSubmit} disabled={sending} style={sending?{opacity:.6,cursor:'not-allowed'}:{}}>
+                {sending ? 'Sending...' : 'Send Enquiry'} &nbsp;{!sending && <Svg d="M22 2 11 13M22 2 15 22 11 13 2 9l20-7z" s={14}/>}
+              </button>
+                </>
+              )}
             </div>
           </div>
         </div>
