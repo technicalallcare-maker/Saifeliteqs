@@ -4,7 +4,7 @@ async function redisGet(key) {
   try {
     const url = process.env.KV_REST_API_URL;
     const token = process.env.KV_REST_API_TOKEN;
-    if (!url || !token) { console.error('Redis credentials missing'); return null; }
+    if (!url || !token) return null;
     const res = await fetch(`${url}/get/${encodeURIComponent(key)}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -18,7 +18,7 @@ async function redisSet(key, value) {
   try {
     const url = process.env.KV_REST_API_URL;
     const token = process.env.KV_REST_API_TOKEN;
-    if (!url || !token) { console.error('Redis credentials missing'); return; }
+    if (!url || !token) return;
     await fetch(`${url}/set/${encodeURIComponent(key)}`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
@@ -40,19 +40,14 @@ export async function POST(request) {
 
     const { page, referrer, visitorId, screenWidth, language } = body;
 
-    // Get Dubai date & time
     const now = new Date();
     const dubaiDate = now.toLocaleDateString('en-CA', { timeZone: 'Asia/Dubai' });
     const dubaiTime = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Dubai', hour: '2-digit', minute: '2-digit' });
 
-    // Device
     const device = (screenWidth && screenWidth < 768) ? 'Mobile' : 'Desktop';
-
-    // Location from Vercel headers
     const country = request.headers.get('x-vercel-ip-country') || 'Unknown';
     const city = request.headers.get('x-vercel-ip-city') || 'Unknown';
 
-    // Browser
     const ua = request.headers.get('user-agent') || '';
     let browser = 'Other';
     if (ua.includes('Chrome') && !ua.includes('Edg')) browser = 'Chrome';
@@ -60,7 +55,6 @@ export async function POST(request) {
     else if (ua.includes('Firefox')) browser = 'Firefox';
     else if (ua.includes('Edg')) browser = 'Edge';
 
-    // Traffic source
     let source = 'Direct';
     if (referrer) {
       try {
@@ -88,18 +82,21 @@ export async function POST(request) {
       language: language || 'Unknown',
     };
 
-    // Save to Redis
+    // Save to Redis — defensive: always ensure arrays exist
     const redisKey = `tracking:${dubaiDate}`;
     const existing = await redisGet(redisKey);
-    const todayData = existing || { visits: [], uniqueVisitors: [] };
+    
+    // Always build fresh arrays to prevent undefined errors
+    const visits = (existing && Array.isArray(existing.visits)) ? existing.visits : [];
+    const uniqueVisitors = (existing && Array.isArray(existing.uniqueVisitors)) ? existing.uniqueVisitors : [];
 
-    todayData.visits.push(visit);
+    visits.push(visit);
 
-    if (visitorId && !todayData.uniqueVisitors.includes(visitorId)) {
-      todayData.uniqueVisitors.push(visitorId);
+    if (visitorId && !uniqueVisitors.includes(visitorId)) {
+      uniqueVisitors.push(visitorId);
     }
 
-    await redisSet(redisKey, todayData);
+    await redisSet(redisKey, { visits, uniqueVisitors });
 
     console.log(`Tracked: ${page} | ${device} | ${browser} | ${source} | ${city}, ${country}`);
 
