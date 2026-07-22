@@ -100,7 +100,7 @@ export async function POST(request) {
 
     await redisSet(redisKey, { visits, uniqueVisitors });
 
-    console.log(`Tracked: ${page} | ${device} | ${browser} | ${source} | ${city}, ${country}`);
+    console.log(`Tracked: ${page} | ${ip} | ${device} | ${browser} | ${source} | ${city}, ${country}`);
 
     return Response.json({ ok: true });
   } catch (error) {
