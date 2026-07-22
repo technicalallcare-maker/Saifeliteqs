@@ -163,6 +163,19 @@ export async function GET(request) {
           <h3 style="font-size:14px;color:#1a1f2e;margin:24px 0 10px;padding-bottom:6px;border-bottom:2px solid #d4aa40;">📍 Locations</h3>
           ${buildTable(countries, 'Location', 'Visits')}
 
+          <!-- IP ADDRESSES -->
+          <h3 style="font-size:14px;color:#1a1f2e;margin:24px 0 10px;padding-bottom:6px;border-bottom:2px solid #d4aa40;">🔒 IP Addresses</h3>
+          ${(() => {
+            const ips = {};
+            visits.forEach(v => {
+              if (v.ip && v.ip !== 'Unknown') {
+                const label = v.city !== 'Unknown' ? `${v.ip} (${v.city}, ${v.country})` : `${v.ip} (${v.country})`;
+                ips[label] = (ips[label] || 0) + 1;
+              }
+            });
+            return buildTable(ips, 'IP Address', 'Visits');
+          })()}
+
           <!-- PEAK HOURS -->
           <h3 style="font-size:14px;color:#1a1f2e;margin:24px 0 10px;padding-bottom:6px;border-bottom:2px solid #d4aa40;">⏰ Peak Hours (Dubai Time)</h3>
           ${buildTable(
