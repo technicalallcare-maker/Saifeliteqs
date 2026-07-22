@@ -1,5 +1,6 @@
 'use client';
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 function getVisitorId() {
   if (typeof window === 'undefined') return 'unknown';
@@ -12,35 +13,29 @@ function getVisitorId() {
 }
 
 export default function Tracker() {
+  const pathname = usePathname();
+
   useEffect(() => {
-    // Small delay to not block page load
     const timer = setTimeout(() => {
       try {
-        const payload = JSON.stringify({
-          page: window.location.pathname,
-          referrer: document.referrer || '',
-          visitorId: getVisitorId(),
-          screenWidth: window.innerWidth,
-          language: navigator.language || '',
-        });
-
-        // Use sendBeacon for non-blocking fire-and-forget
-        if (navigator.sendBeacon) {
-          navigator.sendBeacon('/api/track', payload);
-        } else {
-          fetch('/api/track', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: payload,
-          }).catch(() => {});
-        }
+        fetch('/api/track', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            page: pathname || window.location.pathname,
+            referrer: document.referrer || '',
+            visitorId: getVisitorId(),
+            screenWidth: window.innerWidth,
+            language: navigator.language || '',
+          }),
+        }).catch(() => {});
       } catch (e) {
-        // Silent fail — tracking should never break the site
+        // Silent fail
       }
-    }, 500);
+    }, 800);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [pathname]); // Re-track on every page navigation
 
-  return null; // Invisible component
+  return null;
 }
