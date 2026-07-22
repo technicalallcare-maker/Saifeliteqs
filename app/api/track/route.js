@@ -45,6 +45,7 @@ export async function POST(request) {
     const dubaiTime = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Dubai', hour: '2-digit', minute: '2-digit' });
 
     const device = (screenWidth && screenWidth < 768) ? 'Mobile' : 'Desktop';
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'Unknown';
     const country = request.headers.get('x-vercel-ip-country') || 'Unknown';
     const city = request.headers.get('x-vercel-ip-city') || 'Unknown';
 
@@ -74,6 +75,7 @@ export async function POST(request) {
       page: page || '/',
       time: dubaiTime,
       visitorId: visitorId || 'unknown',
+      ip,
       device,
       browser,
       source,
