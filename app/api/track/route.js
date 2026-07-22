@@ -1,11 +1,10 @@
 // ─── VISITOR TRACKING API ───
-// Saves every page visit to Redis (grouped by date)
 
 async function redisGet(key) {
   try {
     const url = process.env.KV_REST_API_URL;
     const token = process.env.KV_REST_API_TOKEN;
-    if (!url || !token) return null;
+    if (!url || !token) { console.error('Redis credentials missing'); return null; }
     const res = await fetch(`${url}/get/${encodeURIComponent(key)}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -15,15 +14,15 @@ async function redisGet(key) {
   } catch (e) { console.error('Redis get error:', e); return null; }
 }
 
-async function redisSet(key, value, expireSeconds = 2592000) {
+async function redisSet(key, value) {
   try {
     const url = process.env.KV_REST_API_URL;
     const token = process.env.KV_REST_API_TOKEN;
-    if (!url || !token) return;
+    if (!url || !token) { console.error('Redis credentials missing'); return; }
     await fetch(`${url}/set/${encodeURIComponent(key)}`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ value: JSON.stringify(value), ex: expireSeconds }),
+      body: JSON.stringify({ value: JSON.stringify(value), ex: 2592000 }),
     });
   } catch (e) { console.error('Redis set error:', e); }
 }
@@ -41,20 +40,19 @@ export async function POST(request) {
 
     const { page, referrer, visitorId, screenWidth, language } = body;
 
-    // Get Dubai date
+    // Get Dubai date & time
     const now = new Date();
-    const dubaiDate = now.toLocaleDateString('en-CA', { timeZone: 'Asia/Dubai' }); // YYYY-MM-DD
+    const dubaiDate = now.toLocaleDateString('en-CA', { timeZone: 'Asia/Dubai' });
     const dubaiTime = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Dubai', hour: '2-digit', minute: '2-digit' });
 
-    // Detect device from screen width
+    // Device
     const device = (screenWidth && screenWidth < 768) ? 'Mobile' : 'Desktop';
 
-    // Get visitor's IP-based info from headers
-    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'Unknown';
+    // Location from Vercel headers
     const country = request.headers.get('x-vercel-ip-country') || 'Unknown';
     const city = request.headers.get('x-vercel-ip-city') || 'Unknown';
 
-    // Detect browser from user-agent
+    // Browser
     const ua = request.headers.get('user-agent') || '';
     let browser = 'Other';
     if (ua.includes('Chrome') && !ua.includes('Edg')) browser = 'Chrome';
@@ -62,7 +60,7 @@ export async function POST(request) {
     else if (ua.includes('Firefox')) browser = 'Firefox';
     else if (ua.includes('Edg')) browser = 'Edge';
 
-    // Clean referrer
+    // Traffic source
     let source = 'Direct';
     if (referrer) {
       try {
@@ -78,7 +76,6 @@ export async function POST(request) {
       } catch { source = 'Direct'; }
     }
 
-    // Build visit record
     const visit = {
       page: page || '/',
       time: dubaiTime,
@@ -91,19 +88,20 @@ export async function POST(request) {
       language: language || 'Unknown',
     };
 
-    // Save to Redis — append to today's visits
+    // Save to Redis
     const redisKey = `tracking:${dubaiDate}`;
     const existing = await redisGet(redisKey);
     const todayData = existing || { visits: [], uniqueVisitors: [] };
 
     todayData.visits.push(visit);
 
-    // Track unique visitors
     if (visitorId && !todayData.uniqueVisitors.includes(visitorId)) {
       todayData.uniqueVisitors.push(visitorId);
     }
 
-    await redisSet(redisKey, todayData, 2592000); // 30 days expiry
+    await redisSet(redisKey, todayData);
+
+    console.log(`Tracked: ${page} | ${device} | ${browser} | ${source} | ${city}, ${country}`);
 
     return Response.json({ ok: true });
   } catch (error) {
