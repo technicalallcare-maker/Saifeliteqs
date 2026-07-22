@@ -2,6 +2,7 @@ import './globals.css';
 import ChatBot from '../components/ChatBot';
 import Tracker from '../components/Tracker';
 import Script from 'next/script';
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata = {
   metadataBase: new URL('https://www.saifeliteqs.com'),
@@ -279,6 +280,7 @@ export default function RootLayout({ children }) {
         {children}
         <Tracker />
         <ChatBot />
+        <Analytics />
       </body>
     </html>
   );
