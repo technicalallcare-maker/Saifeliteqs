@@ -107,7 +107,7 @@ export default function Page() {
   const [prjFilter, setPrjFilter] = useState('All');
   const [graphVisible, setGraphVisible] = useState(false);
   const [animPct, setAnimPct] = useState(GRAPH_STATS.map(() => 0));
-  const [form, setForm] = useState({ fn:'', ln:'', email:'', svc:'', msg:'' });
+  const [form, setForm] = useState({ fn:'', ln:'', email:'', phone:'', svc:'', msg:'' });
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [formError, setFormError] = useState('');
@@ -934,7 +934,10 @@ export default function Page() {
                 <div className="fg"><label>First Name *</label><input type="text" placeholder="John" value={form.fn} onChange={e=>setForm({...form,fn:e.target.value})}/></div>
                 <div className="fg"><label>Last Name</label><input type="text" placeholder="Smith" value={form.ln} onChange={e=>setForm({...form,ln:e.target.value})}/></div>
               </div>
-              <div className="fg"><label>Email *</label><input type="email" placeholder="john@company.com" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></div>
+              <div className="frow">
+                <div className="fg"><label>Email *</label><input type="email" placeholder="john@company.com" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></div>
+                <div className="fg"><label>Phone Number</label><input type="tel" placeholder="+971 ..." value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})}/></div>
+              </div>
               <div className="fg"><label>Service Required</label>
                 <select value={form.svc} onChange={e=>setForm({...form,svc:e.target.value})}>
                   <option value="">Select a service...</option>
